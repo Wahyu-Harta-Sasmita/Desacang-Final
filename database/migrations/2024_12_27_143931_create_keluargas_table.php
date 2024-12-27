@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keluargas', function (Blueprint $table) {
             $table->id('id_keluarga');
             $table->string('no_kk', 16)->unique();
-            $table->unsignedBigInteger('kepala_keluarga')->nullable();
+            $table->string('kepala_keluarga', 50)->nullable();
             $table->integer('jumlah_keluarga');
             $table->timestamps();
         });
