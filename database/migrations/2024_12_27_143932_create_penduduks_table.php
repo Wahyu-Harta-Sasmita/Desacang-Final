@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('gaji')->nullable();
             $table->string('alamat')->nullable();
             $table->string('no_rumah', 50)->nullable();
+            $table->string('desa', 50)->nullable();
+            $table->string('banjar', 50)->nullable();
             $table->string('kategori', 50)->nullable();
             $table->string('geolocation')->nullable();
             $table->timestamps();
