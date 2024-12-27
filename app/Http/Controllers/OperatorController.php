@@ -16,8 +16,9 @@ class OperatorController extends Controller
     public function datapenduduk()
     {
         // Ambil data penduduk dengan paginasi
-        $penduduk = Penduduk::paginate(10);
-
+        $penduduk = Penduduk::with(['keluarga'])->get();
+        // $penduduk = Penduduk::with(['keluarga.bantuans'])->get();
+        $penduduk = Penduduk::paginate(10); 
         return view('admin.datapenduduk', compact('penduduk'));
     }
 
@@ -78,7 +79,7 @@ class OperatorController extends Controller
         $validated = $request->validate([
             // Data untuk tabel keluargas
             'no_kk' => 'required|string|size:16|unique:keluargas,no_kk',
-            'kepala_keluarga' => 'nullable|integer',
+            'kepala_keluarga' => 'nullable|string|max:50',
             'jumlah_keluarga' => 'required|integer|min:1',
 
             // Data untuk tabel penduduks
@@ -87,6 +88,8 @@ class OperatorController extends Controller
             'pekerjaan' => 'nullable|string|max:50',
             'gaji' => 'nullable|integer|min:0',
             'alamat' => 'nullable|string|max:255',
+            'desa' => 'nullable|string|max:50',
+            'banjar' => 'nullable|string|max:50',
             'no_rumah' => 'nullable|string|max:50',
             'kategori' => 'nullable|string|max:50',
             'geolocation' => 'nullable|string',
@@ -106,12 +109,13 @@ class OperatorController extends Controller
 
         // Simpan data ke tabel penduduks
         $penduduk = Penduduk::create([
-            'id_keluarga' => $keluarga->id_keluarga,
             'nama' => $validated['nama'],
             'nik' => $validated['nik'],
             'pekerjaan' => $validated['pekerjaan'],
             'gaji' => $validated['gaji'],
             'alamat' => $validated['alamat'],
+            'desa' => $validated['desa'],
+            'banjar' => $validated['banjar'],
             'no_rumah' => $validated['no_rumah'],
             'kategori' => $validated['kategori'],
             'geolocation' => $validated['geolocation'],
@@ -171,6 +175,6 @@ class OperatorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       
     }
 }

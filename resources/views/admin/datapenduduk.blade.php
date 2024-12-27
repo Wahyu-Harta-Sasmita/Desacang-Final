@@ -28,6 +28,7 @@
             <table class="w-full border-collapse border border-gray-200">
                 <thead>
                     <tr class="bg-gray-100">
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama</th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala Keluarga
                         </th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
@@ -35,18 +36,40 @@
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Alamat</th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Desa</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Banjar</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jenis Bantuan</th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($penduduk as $p)
                         <tr>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nama_kepala_keluarga }}</td>
+                            <!-- Data dari tabel penduduks -->
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                {{ $p->keluarga->kepala_keluarga ?? '-' }}
+                            </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nik }}</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->no_kk }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                @if ($p->keluarga)
+                                    {{ $p->keluarga->no_kk }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->pekerjaan }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->alamat }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->desa }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->banjar }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                @if ($p->keluarga && $p->keluarga->bantuans->isNotEmpty())
+                                    {{ $p->keluarga->bantuans->first()->jenis_bantuan }}
+                                @else
+                                    Tidak Ada Bantuan
+                                @endif
+                            </td>
+
+                            <!-- Aksi -->
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                 <button class="text-blue-600 hover:underline">Edit</button>
                                 <button class="text-red-600 hover:underline">Delete</button>
@@ -54,7 +77,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="border border-gray-300 p-3 text-sm text-gray-800 text-center">Tidak ada
+                            <td colspan="8" class="border border-gray-300 p-3 text-sm text-gray-800 text-center">Tidak ada
                                 data</td>
                         </tr>
                     @endforelse

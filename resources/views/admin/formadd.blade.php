@@ -33,7 +33,7 @@
             <!-- Nama Kepala Keluarga -->
             <div>
                 <label for="kepala_keluarga" class="block text-sm font-medium text-gray-700">Nama Kepala Keluarga</label>
-                <input type="text" id="kepala_keluarga" name="kepala_keluarga" value="{{ old('nama_kepala_keluarga') }}"
+                <input type="text" id="kepala_keluarga" name="kepala_keluarga" value="{{ old('kepala_keluarga') }}"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
@@ -67,7 +67,7 @@
             <!-- Jumlah Anggota Keluarga -->
             <div>
                 <label for="jumlah_keluarga" class="block text-sm font-medium text-gray-700">Jumlah Anggota Keluarga</label>
-                <input type="number" id="jumlah_keluarga" name="jumlah_keluarga" value="{{ old('jumlah_anggota_keluarga') }}"
+                <input type="number" id="jumlah_keluarga" name="jumlah_keluarga" value="{{ old('jumlah_keluarga') }}"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
@@ -75,6 +75,13 @@
             <div>
                 <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
                 <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}"
+                    class="w-full p-2 border border-gray-300 rounded focus:outline-none">
+            </div>
+
+            <!-- No_Rumah -->
+            <div>
+                <label for="no_rumah" class="block text-sm font-medium text-gray-700">No_Rumah</label>
+                <input type="text" id="no_rumah" name="no_rumah" value="{{ old('no_rumah') }}"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
@@ -88,8 +95,19 @@
             <!-- Koordinat Geolocation -->
             <div>
                 <label for="geolocation" class="block text-sm font-medium text-gray-700">Koordinat Geolocation</label>
-                <input type="text" id="geolocation" name="geolocation" value="{{ old('koordinat') }}"
+                <input type="text" id="geolocation" name="geolocation" value="{{ old('geolocation') }}"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
+            </div>
+
+            <!-- Kategori -->
+            <div>
+                <label for="kategori" class="block text-sm font-medium text-gray-700">Jenis Kategori</label>
+                <select id="kategori" name="kategori" class="w-full p-2 border border-gray-300 rounded focus:outline-none">
+                    <option value="">Pilih Jenis Kategori</option>
+                    <option value="Krama Desa Adat" {{ old('kategori') == 'Krama Desa Adat' ? 'selected' : '' }}>Krama Desa Adat</option>
+                    <option value="Krama Tamiu" {{ old('kategori') == 'Krama Tamiu' ? 'selected' : '' }}>Krama Tamiu</option>
+                    <option value="Tamiu" {{ old('kategori') == 'Tamiu' ? 'selected' : '' }}>Tamiu</option>
+                </select>
             </div>
 
             <!-- Jenis Bantuan -->
@@ -124,22 +142,22 @@
 
             <!-- Foto -->
             <div>
-                <label for="foto_kepala_keluarga" class="block text-sm font-medium text-gray-700">Foto</label>
-                <input type="file" id="foto" name="foto" accept="image/*"
+                <label for="photo" class="block text-sm font-medium text-gray-700">Foto</label>
+                <input type="file" id="photo" name="photo" accept="image/*"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
             <!-- Foto Rumah -->
             <div>
-                <label for="foto_rumah" class="block text-sm font-medium text-gray-700">Foto Rumah</label>
-                <input type="file" id="foto_rumah" name="foto_rumah" accept="image/*"
+                <label for="rumah" class="block text-sm font-medium text-gray-700">Foto Rumah</label>
+                <input type="file" id="rumah" name="rumah" accept="image/*"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
             <!-- Foto KK -->
             <div>
-                <label for="foto_kk" class="block text-sm font-medium text-gray-700">Foto KK</label>
-                <input type="file" id="foto_kk" name="foto_kk" accept="image/*"
+                <label for="kk" class="block text-sm font-medium text-gray-700">Foto KK</label>
+                <input type="file" id="kk" name="kk" accept="image/*"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
