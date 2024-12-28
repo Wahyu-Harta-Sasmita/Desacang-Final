@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,8 +21,16 @@ return new class extends Migration
             $table->string('desa', 50)->nullable();
             $table->string('banjar', 50)->nullable();
             $table->string('kategori', 50)->nullable();
+            $table->unsignedBigInteger('keluarga_id')->nullable();
             $table->string('geolocation')->nullable();
             $table->timestamps();
+
+            // Menambahkan foreign key constraint
+            $table->foreign('keluarga_id')
+                  ->references('id_keluarga')
+                  ->on('keluargas')
+                  ->onDelete('set null')
+                  ->onUpdate('cascade');
         });
     }
 

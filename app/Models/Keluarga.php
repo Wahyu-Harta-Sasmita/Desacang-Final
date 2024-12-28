@@ -6,31 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keluarga extends Model
 {
+    protected $table = 'keluargas';
     protected $primaryKey = 'id_keluarga';
     protected $guarded = [];
 
     /**
-     * Relasi dengan tabel Penduduk menggunakan id_keluarga.
+     * Relasi dengan tabel Penduduk
      */
     public function penduduks()
     {
-        return $this->hasMany(Penduduk::class, 'id_keluarga');
+        return $this->hasMany(Penduduk::class, 'keluarga_id', 'id_keluarga');
     }
 
     /**
-     * Mengambil nama kepala keluarga secara manual jika tidak ada foreign key.
-     * Asumsi: 'kepala_keluarga' menyimpan nama kepala keluarga (bukan ID).
+     * Mendapatkan daftar anggota keluarga
      */
-    public function getKepalaKeluargaNameAttribute()
+    public function anggotaKeluarga()
     {
-        return $this->kepala_keluarga; // Hanya mengembalikan nama dari kolom kepala_keluarga.
+        return $this->penduduks()->orderBy('nama');
     }
 
     /**
-     * Relasi dengan tabel Bantuan menggunakan id_keluarga.
+     * Scope untuk mencari berdasarkan nomor KK
      */
-    public function bantuans()
+    public function scopeNomorKK($query, $noKK)
     {
-        return $this->hasMany(Bantuan::class, 'id_keluarga');
+        return $query->where('no_kk', $noKK);
     }
 }
