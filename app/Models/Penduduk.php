@@ -2,35 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Penduduk extends Model
 {
+    use HasFactory;
+
     protected $table = 'penduduks';
-    protected $primaryKey = 'id_penduduk';
-    protected $guarded = [];
 
-    /**
-     * Relasi dengan tabel Keluarga.
-     */
-    public function keluarga()
-    {
-        return $this->belongsTo(Keluarga::class, 'keluarga_id', 'id_keluarga');
-    }
+    protected $fillable = [
+        'nama', 'nik', 'no_kk', 'kepala_keluarga', 'jumlah_keluarga', 'pekerjaan', 'gaji', 
+        'alamat', 'no_rumah', 'desa', 'banjar', 'kategori', 'geolocation', 'path_rumah', 
+        'rumah', 'path_kk', 'kk', 'bantuan_id'
+    ];
 
-    /**
-     * Scope untuk mencari penduduk berdasarkan kategori
-     */
-    public function scopeKategori($query, $kategori)
+    public function bantuan()
     {
-        return $query->where('kategori', $kategori);
-    }
-
-    /**
-     * Accessor untuk mendapatkan informasi lengkap alamat
-     */
-    public function getAlamatLengkapAttribute()
-    {
-        return "{$this->alamat} No. {$this->no_rumah}, Banjar {$this->banjar}, Desa {$this->desa}";
+        return $this->belongsTo(Bantuan::class, 'bantuan_id', 'id_bantuan');
     }
 }

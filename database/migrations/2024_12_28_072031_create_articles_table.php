@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('keluargas', function (Blueprint $table) {
-            $table->id('id_keluarga');
-            $table->string('no_kk', 16)->unique();
-            $table->string('kepala_keluarga', 50)->nullable();
-            $table->integer('jumlah_keluarga');
+        Schema::create('articles', function (Blueprint $table) {
+            $table->id('id_article');
+            $table->string('judul');
+            $table->string('path_article')->default('assets/uploads/article/');
+            $table->string('article');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('keluargas');
+        Schema::dropIfExists('articles');
     }
 };

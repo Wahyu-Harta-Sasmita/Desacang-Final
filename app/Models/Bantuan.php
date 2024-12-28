@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bantuan extends Model
 {
-    protected $primaryKey = 'id_bantuan';
-    protected $guarded = [];
+    use HasFactory;
 
-    public function keluarga()
+    protected $table = 'bantuans';
+
+    protected $fillable = [
+        'jenis_bantuan',
+    ];
+
+    public function penduduks()
     {
-        return $this->belongsTo(Keluarga::class, 'id_keluarga');
+        return $this->hasMany(Penduduk::class, 'bantuan_id', 'id_bantuan');
     }
 }
