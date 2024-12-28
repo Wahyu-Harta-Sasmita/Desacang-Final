@@ -17,8 +17,6 @@ class OperatorController extends Controller
     {
         // Ambil data penduduk dengan paginasi
         $penduduk = Penduduk::with(['keluarga'])->get();
-        // $penduduk = Penduduk::with(['keluarga.bantuans'])->get();
-        $penduduk = Penduduk::paginate(10); 
         return view('admin.datapenduduk', compact('penduduk'));
     }
 

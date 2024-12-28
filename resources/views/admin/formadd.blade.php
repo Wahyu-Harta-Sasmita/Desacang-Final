@@ -140,12 +140,12 @@
                 </select>
             </div>
 
-            <!-- Foto -->
+            <!-- Foto
             <div>
                 <label for="photo" class="block text-sm font-medium text-gray-700">Foto</label>
                 <input type="file" id="photo" name="photo" accept="image/*"
                     class="w-full p-2 border border-gray-300 rounded focus:outline-none">
-            </div>
+            </div> -->
 
             <!-- Foto Rumah -->
             <div>
