@@ -18,7 +18,7 @@
             <div class="p-6 flex items-center justify-between bg-gray-800">
                 <!-- Logo dan Teks -->
                 <div class="flex items-center">
-                    <img src="{{ asset('images/desacang.png') }}" alt="Logo" class="w-12 h-12 rounded-full mr-3">
+                    <img src="{{ asset('assets/image/desacang.png') }}" alt="Logo" class="w-12 h-12 rounded-full mr-3">
                     <a href="{{ route('admin') }}" class="text-2xl font-bold text-white tracking-wide">DESACANG</a>
                 </div>
             </div>
