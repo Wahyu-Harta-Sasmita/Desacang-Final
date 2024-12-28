@@ -18,7 +18,7 @@
             <div class="p-6 flex items-center justify-between bg-gray-800">
                 <!-- Logo dan Teks -->
                 <div class="flex items-center">
-                    <img src="{{ asset('images/desacang.png') }}" alt="Logo" class="w-12 h-12 rounded-full mr-3">
+                    <img src="{{ asset('assets/images/DESACANG.png') }}" alt="Logo" class="w-12 h-12 mr-3">
                     <a href="{{ route('admin') }}" class="text-2xl font-bold text-white tracking-wide">DESACANG</a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="relative">
                     <button id="profileMenuButton"
                         class="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none">
-                        <img src="{{ asset('images/profile.png') }}" alt="Profile" class="w-8 h-8 rounded-full">
+                        <img src="{{ asset('assets/images/profile.png') }}" alt="Profile" class="w-8 h-8 rounded-full">
                     </button>
                     <!-- Profile Dropdown -->
                     <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded shadow-lg">
