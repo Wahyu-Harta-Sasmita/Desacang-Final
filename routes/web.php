@@ -48,6 +48,8 @@ Route::get('/admin/artikel', [OperatorController::class, 'artikel']) -> name('ar
 Route::get('/admin/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/admin/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/admin/detailpenduduk', [OperatorController::class, 'detailpenduduk']) -> name('detailpenduduk');
+Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datapenduduk');
+
 
 
 require __DIR__.'/auth.php';

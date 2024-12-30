@@ -4,22 +4,29 @@
         <!-- Header Data Penduduk -->
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold text-gray-700">Data Penduduk</h2>
-            <div class="flex gap-4">
+            <form method="GET" action="{{ route('datapenduduk') }}" class="flex gap-4">
+                <!-- Pencarian Nama -->
                 <div class="w-64">
-                    <input type="text" placeholder="Cari Nama..."
+                    <input type="text" name="search" placeholder="Cari Nama..." value="{{ request('search') }}"
                         class="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
-                <div>
-                    <select
-                        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
-                        <option value="">Filter Desa</option>
-                        <option value="Desa Melati">Desa Bungkulan</option>
-                        <option value="Desa Mawar">Desa Temukus</option>
-                    </select>
-                </div>
-            </div>
+                <form method="GET" action="{{ route('datapenduduk') }}" class="flex gap-4">
+                    <!-- Filter Desa -->
+                    <div>
+                        <select name="desa_filter"
+                            class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
+                            <option value="">Filter Desa</option>
+                            <option value="Desa Bungkulan" {{ request('desa_filter') == 'Desa Bungkulan' ? 'selected' : '' }}>Desa Bungkulan</option>
+                            <option value="Desa Temukus" {{ request('desa_filter') == 'Desa Temukus' ? 'selected' : '' }}>
+                                Desa Temukus</option>
+                        </select>
+                    </div>
+                    <!-- Tombol Cari -->
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cari</button>
         </div>
 
+        <!-- Tabel Data -->
         <div class="overflow-x-auto">
             <table class="w-full border-collapse border border-gray-200">
                 <thead>
@@ -41,29 +48,30 @@
                     @forelse ($penduduk as $p)
                         <tr>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nama }}</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                {{ $p->keluarga->kepala_keluarga ?? '-' }}</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nik }}</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->keluarga->no_kk ?? '-' }}
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->kepala_keluarga ?? '-' }}
                             </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nik }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->no_kk ?? '-' }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->pekerjaan }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->alamat }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->desa }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->banjar }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                @if ($p->keluarga && $p->keluarga->bantuans->isNotEmpty())
-                                    {{ $p->keluarga->bantuans->first()->jenis_bantuan }}
+                                @if ($p->bantuan)
+                                    {{ $p->bantuan->jenis_bantuan }}
                                 @else
                                     Tidak Ada Bantuan
                                 @endif
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <button class="text-blue-600 hover:underline">Edit</button>
-                                <form action="{{ route('penduduk.destroy', $p->id_penduduk) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                <!-- Tombol Edit -->
+                                <a href="#" class="text-yellow-600 hover:underline">Edit</a>
+                                <!-- Form Hapus -->
+                                <form action="#">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                    <button type="submit" class="text-red-600 hover:underline"
+                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -79,18 +87,10 @@
 
         <div class="flex justify-between items-center mt-6">
             <div class="flex items-center space-x-1">
-                <button
-                    class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled>&larr; Sebelumnya</button>
-                <span class="px-4 py-2 bg-gray-100 text-gray-700 rounded">1</span>
-                <button class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-gray-700">Berikutnya &rarr;</button>
+                {{ $penduduk->links() }}
             </div>
             <a href="{{ route('formadd') }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tambah
                 Data</a>
-        </div>
-
-        <div class="mt-4">
-            {{ $penduduk->links() }}
         </div>
     </div>
 </x-sidebar-layout>

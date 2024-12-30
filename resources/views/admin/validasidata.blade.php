@@ -5,32 +5,43 @@
             <h2 class="text-lg font-semibold text-gray-700">Validasi Data Penduduk</h2>
 
             <!-- Filters -->
-            <div class="flex gap-4 mb-4">
+            <form method="GET" action="{{ route('datapenduduk') }}" class="flex gap-4">
                 <div class="flex gap-4">
-                    <button
+                    <button type="submit" name="validated" value="1"
                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         Data yang Tervalidasi
                     </button>
-                    <button
+                    <button type="submit" name="validated" value="0"
                         class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
                         Data yang Belum Tervalidasi
                     </button>
                 </div>
-                <!-- Search -->
+
+                <!-- Pencarian Nama -->
                 <div class="w-64">
-                    <input type="text" placeholder="Cari Nama..."
+                    <input type="text" name="search" placeholder="Cari Nama..." value="{{ request('search') }}"
                         class="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
+
                 <!-- Filter Desa -->
                 <div>
-                    <select
+                    <select name="desa_filter"
                         class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
                         <option value="">Filter Desa</option>
-                        <option value="Desa Melati">Desa Bungkulan</option>
-                        <option value="Desa Mawar">Desa Temukus</option>
+                        <option value="Desa Bungkulan" {{ request('desa_filter') == 'Desa Bungkulan' ? 'selected' : '' }}>
+                            Desa Bungkulan</option>
+                        <option value="Desa Temukus" {{ request('desa_filter') == 'Desa Temukus' ? 'selected' : '' }}>Desa
+                            Temukus</option>
+                        <option value="Desa Melati" {{ request('desa_filter') == 'Desa Melati' ? 'selected' : '' }}>Desa
+                            Melati</option>
+                        <option value="Desa Mawar" {{ request('desa_filter') == 'Desa Mawar' ? 'selected' : '' }}>Desa
+                            Mawar</option>
                     </select>
                 </div>
-            </div>
+
+                <!-- Tombol Cari -->
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cari</button>
+            </form>
         </div>
         <div class="bg-white">
             <div class="overflow-x-auto">

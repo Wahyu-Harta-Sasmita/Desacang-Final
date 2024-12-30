@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\Penduduk;
-use App\Models\Keluarga;
 use App\Models\Bantuan;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class OperatorController extends Controller
 
     public function datapenduduk()
     {
-        $penduduk = Penduduk::with(['keluarga.bantuans'])->paginate(10); // Muat relasi keluarga dan bantuans
+        $penduduk = Penduduk::with('bantuan')->paginate(4);
         return view('admin.datapenduduk', compact('penduduk'));
     }
 
@@ -64,7 +63,8 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        return view('admin.formadd'); // Sesuaikan dengan lokasi file Blade Anda
+        $bantuans = Bantuan::all();
+        return view('admin.formadd', compact('bantuans')); // Sesuaikan dengan lokasi file Blade Anda
     }
 
     /**
@@ -75,14 +75,11 @@ class OperatorController extends Controller
         try {
             // Validasi input
             $validated = $request->validate([
-                // Data untuk tabel keluargas
-                'no_kk' => 'required|string|size:16|unique:keluargas,no_kk',
-                'kepala_keluarga' => 'nullable|string|max:50',
-                'jumlah_keluarga' => 'required|integer|min:1',
-
-                // Data untuk tabel penduduks
                 'nama' => 'required|string|max:50',
                 'nik' => 'required|string|size:16|unique:penduduks,nik',
+                'no_kk' => 'required|string|size:16',
+                'kepala_keluarga' => 'nullable|string|max:50',
+                'jumlah_keluarga' => 'required|integer|min:1',
                 'pekerjaan' => 'nullable|string|max:50',
                 'gaji' => 'nullable|integer|min:0',
                 'alamat' => 'nullable|string|max:255',
@@ -90,59 +87,61 @@ class OperatorController extends Controller
                 'banjar' => 'nullable|string|max:50',
                 'no_rumah' => 'nullable|string|max:50',
                 'kategori' => 'nullable|string|max:50',
-                'geolocation' => 'nullable|string',
-
-                // Data untuk tabel bantuans
-                'jenis_bantuan' => 'required|string|max:10',
-                'foto_rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-                'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'geolocation' => 'nullable|string|max:255',
+                'rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'jenis_bantuan' => 'required|string|max:50',
             ]);
 
-            // Simpan data ke tabel keluargas
-            $keluarga = Keluarga::create([
-                'no_kk' => $validated['no_kk'],
-                'kepala_keluarga' => $validated['kepala_keluarga'],
-                'jumlah_keluarga' => $validated['jumlah_keluarga'],
+            // Upload file jika ada
+            $pathRumah = $request->file('rumah')
+                ? $request->file('rumah')->store('assets/uploads/rumah', 'public')
+                : null;
+
+            $pathKK = $request->file('kk')
+                ? $request->file('kk')->store('assets/uploads/kk', 'public')
+                : null;
+
+            // Simpan data ke tabel bantuans
+            $bantuan = Bantuan::create([
+                'jenis_bantuan' => $validated['jenis_bantuan'],
             ]);
 
             // Simpan data ke tabel penduduks
             $penduduk = Penduduk::create([
+                'user_id' => auth()->id() ?? null, // Jika tidak login, user_id diset null
                 'nama' => $validated['nama'],
                 'nik' => $validated['nik'],
-                'pekerjaan' => $validated['pekerjaan'],
-                'gaji' => $validated['gaji'],
-                'alamat' => $validated['alamat'],
-                'desa' => $validated['desa'],
-                'banjar' => $validated['banjar'],
-                'no_rumah' => $validated['no_rumah'],
-                'kategori' => $validated['kategori'],
-                'geolocation' => $validated['geolocation'],
-            ]);
-
-            // Upload file dan simpan ke tabel bantuans
-            $pathRumah = $request->file('foto_rumah')
-                ? $request->file('foto_rumah')->store('assets/uploads/rumah', 'public')
-                : null;
-
-            $pathKK = $request->file('foto_kk')
-                ? $request->file('foto_kk')->store('assets/uploads/kk', 'public')
-                : null;
-
-            $bantuan = Bantuan::create([
-                'id_keluarga' => $keluarga->id_keluarga,
-                'jenis_bantuan' => $validated['jenis_bantuan'],
-                'rumah' => $pathRumah,
-                'kk' => $pathKK,
+                'no_kk' => $validated['no_kk'],
+                'kepala_keluarga' => $validated['kepala_keluarga'] ?? null,
+                'jumlah_keluarga' => $validated['jumlah_keluarga'],
+                'pekerjaan' => $validated['pekerjaan'] ?? null,
+                'gaji' => $validated['gaji'] ?? 0,
+                'alamat' => $validated['alamat'] ?? null,
+                'desa' => $validated['desa'] ?? null,
+                'banjar' => $validated['banjar'] ?? null,
+                'no_rumah' => $validated['no_rumah'] ?? null,
+                'kategori' => $validated['kategori'] ?? null,
+                'geolocation' => $validated['geolocation'] ?? null,
+                'path_rumah' => $pathRumah,
+                'rumah' => $pathRumah ? basename($pathRumah) : null,
+                'path_kk' => $pathKK,
+                'kk' => $pathKK ? basename($pathKK) : null,
+                'bantuan_id' => $bantuan->id_bantuan,
             ]);
 
             // Redirect dengan pesan sukses
             return redirect()->route('datapenduduk')->with('success', 'Data berhasil disimpan ke semua tabel.');
-
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            // Tangani error saat menyimpan data
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()]);
         }
     }
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -192,6 +191,26 @@ class OperatorController extends Controller
         }
 
         return redirect()->route('datapenduduk')->with('error', 'Data penduduk tidak ditemukan.');
+    }
+
+    public function search(Request $request)
+    {
+        $query = Penduduk::query();
+
+        // Filter berdasarkan nama
+        if ($request->filled('search')) {
+            $query->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter berdasarkan desa
+        if ($request->filled('desa_filter')) {
+            $query->where('desa', $request->desa_filter);
+        }
+
+        // Ambil hasil pencarian
+        $penduduk = $query->paginate(4); // Menggunakan pagination
+
+        return view('admin.datapenduduk', compact('penduduk'));
     }
 
 }
