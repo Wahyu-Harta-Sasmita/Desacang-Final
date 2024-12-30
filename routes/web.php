@@ -33,10 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-// Admin Routes
-Route::get('/admin', [OperatorController::class, 'dashboard']) -> name('admin');
+    Route::get('/admin', [OperatorController::class, 'dashboard']) -> name('admin');
 Route::get('/admin/dashboard', [OperatorController::class, 'dashboard']) -> name('admin.dashboard');
 Route::get('/admin/datapenduduk', [OperatorController::class, 'datapenduduk']) -> name('datapenduduk');
 Route::get('/admin/formadd', [OperatorController::class, 'create']) -> name('formadd');
@@ -49,6 +47,10 @@ Route::get('/admin/profile', [OperatorController::class, 'profile']) -> name('pr
 Route::get('/admin/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/admin/detailpenduduk', [OperatorController::class, 'detailpenduduk']) -> name('detailpenduduk');
 Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datapenduduk');
+});
+
+// Admin Routes
+
 
 
 
