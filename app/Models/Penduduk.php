@@ -1,24 +1,24 @@
 <?php
-
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Penduduk extends Model
 {
-    use HasFactory;
+    protected $primaryKey = 'id_penduduk';
+    protected $guarded = [];
 
-    protected $table = 'penduduks';
-
-    protected $fillable = [
-        'nama', 'nik', 'no_kk', 'kepala_keluarga', 'jumlah_keluarga', 'pekerjaan', 'gaji', 
-        'alamat', 'no_rumah', 'desa', 'banjar', 'kategori', 'geolocation', 'path_rumah', 
-        'rumah', 'path_kk', 'kk', 'bantuan_id'
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function bantuan()
     {
         return $this->belongsTo(Bantuan::class, 'bantuan_id', 'id_bantuan');
+    }
+
+    public function validasi()
+    {
+        return $this->belongsTo(Validasi::class, 'validasi_id', 'id_validasi');
     }
 }

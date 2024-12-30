@@ -2,13 +2,13 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class Komentar extends Model
+class Notifikasi extends Model
 {
-    protected $primaryKey = 'id_komentar';
+    protected $primaryKey = 'id_notifikasi';
     protected $guarded = [];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_pengguna');
+        return $this->belongsTo(User::class);
     }
 }
