@@ -5,7 +5,8 @@
             <h2 class="text-lg font-semibold text-gray-700">Validasi Data Penduduk</h2>
 
             <!-- Filters -->
-            <form method="GET" action="{{ route('datapenduduk') }}" class="flex gap-4">
+            <form method="GET" action="{{ route('validasidata') }}" class="flex gap-4">
+                <input type="hidden" name="page_type" value="validasidata">
                 <div class="flex gap-4">
                     <button type="submit" name="validated" value="1"
                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
@@ -29,39 +30,37 @@
                         class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
                         <option value="">Filter Desa</option>
                         <option value="Desa Bungkulan" {{ request('desa_filter') == 'Desa Bungkulan' ? 'selected' : '' }}>
-                            Desa Bungkulan</option>
+                            Desa
+                            Bungkulan</option>
                         <option value="Desa Temukus" {{ request('desa_filter') == 'Desa Temukus' ? 'selected' : '' }}>Desa
-                            Temukus</option>
-                        <option value="Desa Melati" {{ request('desa_filter') == 'Desa Melati' ? 'selected' : '' }}>Desa
-                            Melati</option>
-                        <option value="Desa Mawar" {{ request('desa_filter') == 'Desa Mawar' ? 'selected' : '' }}>Desa
-                            Mawar</option>
+                            Temukus
+                        </option>
                     </select>
                 </div>
 
                 <!-- Tombol Cari -->
                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cari</button>
             </form>
+
         </div>
+
+        <!-- Tabel Data Penduduk -->
         <div class="bg-white">
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse border border-gray-200">
                     <thead>
                         <tr class="bg-gray-100">
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala
-                                Keluarga
-                            </th>
+                                Keluarga</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">No KK</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jumlah Anggota
-                                Keluarga
-                            </th>
+                                Keluarga</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Alamat</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Gaji</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Koordinat
-                                Geolocation
-                            </th>
+                                Geolocation</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jenis Bantuan</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Desa</th>
                             <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Banjar</th>
@@ -71,52 +70,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">I Gusti Rai</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">1234567890123456</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">9876543210987654</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Petani</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">5</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Jl. Melati No. 10</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">100.000.000</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">-8.3405, 115.0920</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">PKH, KIS</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Desa Melati</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Banjar Melati</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="#" class="text-blue-600 hover:underline">Lihat Dokumen</a>
-                            </td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="#" class="text-blue-600 hover:underline">Lihat Dokumen</a>
-                            </td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <button class="text-blue-600 hover:underline mr-2">Validasi</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Kadek Artha</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">9876543210123456</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">1234567890987654</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Pedagang</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">3</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Jl. Mawar No. 15</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">200.000.000</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">-8.3505, 115.1020</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">KIP, PBI</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Desa Mawar</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">Banjar Mawar</td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="#" class="text-blue-600 hover:underline">Lihat Dokumen</a>
-                            </td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="#" class="text-blue-600 hover:underline">Lihat Dokumen</a>
-                            </td>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <button class="text-blue-600 hover:underline mr-2">Validasi</button>
-                            </td>
-                        </tr>
+                        @foreach ($validasi as $penduduk)
+                            <tr>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    {{ $penduduk->kepala_keluarga }}
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->nik }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->no_kk }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->pekerjaan }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    {{ $penduduk->jumlah_keluarga }}
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->alamat }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    {{ number_format($penduduk->gaji, 0, ',', '.') }}
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->geolocation }}
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    {{ $penduduk->bantuan?->jenis_bantuan ?? '-' }}
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->desa }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->banjar }}</td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    <a href="{{ asset($penduduk->path_rumah) }}" download
+                                        class="text-blue-600 hover:underline">Unduh Dokumen</a>
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    <a href="{{ asset($penduduk->path_kk) }}" download
+                                        class="text-blue-600 hover:underline">Unduh Dokumen</a>
+                                </td>
+                                <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                    @if ($penduduk->validasi?->status === 'validated')
+                                        <span class="text-green-600">Selesai</span>
+                                    @else
+                                        <form method="POST" action="{{ route('validate', ['user_id' => $penduduk->user_id]) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="text-blue-600 hover:underline">
+                                                Validasi
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <div class="mt-4">
+                    {{ $validasi->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>

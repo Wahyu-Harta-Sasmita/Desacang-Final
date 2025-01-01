@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Penduduk;
 use App\Models\Bantuan;
+use App\Models\Validasi;
 use Illuminate\Http\Request;
 
 class OperatorController extends Controller
@@ -19,9 +20,52 @@ class OperatorController extends Controller
     }
 
 
-    public function validasidata()
+    public function validasidata(Request $request)
     {
-        return view('admin.validasidata');
+        $query = Penduduk::with('bantuan');
+
+        // Filter berdasarkan nama
+        if ($request->filled('search')) {
+            $query->where('kepala_keluarga', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter berdasarkan desa
+        if ($request->filled('desa_filter')) {
+            $query->where('desa', $request->desa_filter);
+        }
+
+        // Filter berdasarkan status validasi
+        if ($request->filled('validated')) {
+            if ($request->validated == 1) {
+                $query->whereHas('validasi', function ($q) {
+                    $q->where('status', 'validated');
+                });
+            } elseif ($request->validated == 0) {
+                $query->whereDoesntHave('validasi');
+            }
+        }
+
+        // Ambil hasil pencarian dengan paginasi
+        $validasi = $query->paginate(4)->appends($request->all());
+
+        // Return ke view
+        return view('admin.validasidata', compact('validasi'));
+    }
+
+
+    public function validate($userId)
+    {
+        $penduduk = Penduduk::where('user_id', $userId)->firstOrFail();
+
+        Validasi::updateOrCreate(
+            ['user_id' => $penduduk->user_id], // Gunakan user_id untuk identifikasi
+            [
+                'status' => 'validated',
+                'validate_at' => now(),
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Data berhasil divalidasi.');
     }
 
     public function artikel()
@@ -139,10 +183,6 @@ class OperatorController extends Controller
         }
     }
 
-
-
-
-
     /**
      * Display the specified resource.
      */
@@ -212,5 +252,4 @@ class OperatorController extends Controller
 
         return view('admin.datapenduduk', compact('penduduk'));
     }
-
 }
