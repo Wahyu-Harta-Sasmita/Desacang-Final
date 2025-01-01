@@ -11,6 +11,7 @@ return new class extends Migration
             $table->id('id_article');
             $table->foreignId('user_id')->constrained();
             $table->string('judul', 255);
+            $table->string('cover_article', 255)->default('assets/uploads/article_cover/');
             $table->string('path_article', 255)->default('assets/uploads/article/');
             $table->string('article', 255);
             $table->timestamps();
