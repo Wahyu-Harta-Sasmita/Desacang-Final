@@ -1,20 +1,23 @@
+import BerandaLayout from '@/Layouts/BerandaLayout';
 import React from 'react';
 
 const Notifikasi = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-96 md:w-1/2 lg:w-2/3">
-        <h2 className="font-bold text-2xl text-center py-4 text-gray-800">
-          Validasi Data Saya
-        </h2>
-        <div className="flex justify-center">
-          <span className="bg-green-100 text-green-600 text-sm font-medium px-4 py-2 rounded-full">
-            Berhasil
-          </span>
+    <div className="flex justify-center items-center h-screen">
+      <div className=" p-8 w-96 md:w-1/2 lg:w-2/3 max-w-full">
+        <div className="flex justify-center mb-4">
+          <img 
+            src="/assets/images/comingsoon.png" 
+            alt="comingsoon" 
+            className="transition-transform transform hover:scale-105" 
+          />
         </div>
+        <p className="text-center text-gray-500 mt-2">Stay tuned for exciting updates!</p>
       </div>
     </div>
   );
 };
+
+Notifikasi.layout = (page) => <BerandaLayout>{page}</BerandaLayout>;
 
 export default Notifikasi;

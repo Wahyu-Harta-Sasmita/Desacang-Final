@@ -24,7 +24,14 @@ const NavBar = () => {
                         Article
                     </Link>
 
-                    <Link href="/notification" className="relative">
+                    <Link
+                        href="/addData"
+                        className=" hover:bg-gray-400 hover:text-black rounded-md py-2 px-4 transition duration-200 font-medium"
+                    >
+                        Tambah Data
+                    </Link>
+
+                    <Link href="/notifikasi" className="relative">
                         <img
                             src="/assets/icon/notification.png"
                             alt="notification"
@@ -35,7 +42,7 @@ const NavBar = () => {
                         </span>
                     </Link>
 
-                    <Link href="/profile">
+                    <Link href="/profiles">
                         <img
                             src="/assets/icon/profile.png"
                             alt="profile"

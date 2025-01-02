@@ -30,34 +30,36 @@ class ArtikelController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'judul' => 'required|max:255',
             'article' => 'required|file|mimes:doc,docx,pdf|max:2048',
-            'cover_article' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'cover_article' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'deskripsi' => 'required|max:255',
         ]);
 
-        // Upload file artikel
-        $articlePath = $request->file('article')->store('assets/uploads/artikel', 'public');
+        $articleFile = $request->file('article');
+        $articleName = time() . '_' . $articleFile->getClientOriginalName();
+        $articleFile->move(public_path('assets/uploads/article'), $articleName);
 
-        // Upload cover artikel (jika ada)
-        $coverPath = null;
+        $coverName = null;
         if ($request->hasFile('cover_article')) {
-            $coverPath = $request->file('cover_article')->store('assets/uploads/artikel_cover', 'public');
+            $coverFile = $request->file('cover_article');
+            $coverName = time() . '_' . $coverFile->getClientOriginalName();
+            $coverFile->move(public_path('assets/uploads/article_cover'), $coverName);
         }
 
-        // Simpan data ke database
         Article::create([
-            'user_id' => auth()->id(), // ID pengguna yang sedang login
+            'user_id' => auth()->id(),
             'judul' => $request->judul,
-            'cover_article' => $coverPath ?? 'assets/uploads/artikel_cover/', // Gunakan default jika tidak ada
-            'path_article' => 'assets/uploads/artikel/',
-            'article' => $articlePath,
+            'cover_article' => $coverName, 
+            'article' => $articleName,
             'deskripsi' => $request->deskripsi,
         ]);
 
         return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil ditambahkan');
     }
+
 
     /**
      * Display the specified resource.
@@ -93,12 +95,12 @@ class ArtikelController extends Controller
 
         // Update file jika diunggah
         if ($request->hasFile('cover_article')) {
-            $coverPath = $request->file('cover_article')->store('assets/uploads/artikel_cover', 'public');
+            $coverPath = $request->file('cover_article')->store('assets/uploads/article_cover', 'public');
             $artikel->cover_article = basename($coverPath);
         }
 
         if ($request->hasFile('article')) {
-            $filePath = $request->file('article')->store('assets/uploads/artikel', 'public');
+            $filePath = $request->file('article')->store('assets/uploads/article', 'public');
             $artikel->article = basename($filePath);
         }
 
@@ -121,7 +123,7 @@ class ArtikelController extends Controller
 
             // Hapus file cover jika ada
             if ($artikel->cover_article) {
-                $coverPath = public_path('assets/uploads/artikel_cover/' . $artikel->cover_article);
+                $coverPath = public_path('assets/uploads/article_cover/' . $artikel->cover_article);
                 if (file_exists($coverPath)) {
                     unlink($coverPath); // Hapus file cover
                 }
@@ -129,7 +131,7 @@ class ArtikelController extends Controller
 
             // Hapus file artikel jika ada
             if ($artikel->article) {
-                $filePath = public_path('assets/uploads/artikel/' . $artikel->article);
+                $filePath = public_path('assets/uploads/article/' . $artikel->article);
                 if (file_exists($filePath)) {
                     unlink($filePath); // Hapus file artikel
                 }
@@ -145,5 +147,4 @@ class ArtikelController extends Controller
             return redirect()->route('admin.artikel')->with('error', 'Terjadi kesalahan saat menghapus artikel: ' . $e->getMessage());
         }
     }
-
 }

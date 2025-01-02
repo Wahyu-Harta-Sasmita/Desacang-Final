@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\Penduduk;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -11,17 +14,45 @@ class UserController extends Controller
      */
     public function index()
     {
-        return inertia('Home');
+        $articles = Article::latest()->take(6)->get();
+
+        return Inertia::render('Home', [
+            'articles' => $articles
+        ]);
     }
 
     public function article()
     {
-        return inertia('Articles');
+        $articles = Article::all();
+
+        return Inertia::render('Articles', [
+            'articles' => $articles
+        ]);
     }
 
-    public function articleDetail()
+    public function articleDetail($id)
     {
-        return inertia('ArticleDetails');
+        $article = Article::findOrFail($id);
+
+        return Inertia::render('ArticleDetails', [
+            'article' => $article
+        ]);
+    }
+
+    public function notifikasi()
+    {
+        return inertia('Notification');
+    }
+
+    public function profiles()
+    {
+        $penduduk = Penduduk::with('bantuan')
+        ->latest()
+        ->take(1)
+        ->get();
+        return Inertia::render('Profiles', [
+            'penduduk' => $penduduk
+        ]);
     }
 
     /**

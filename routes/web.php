@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 Route::get('/home', [UserController::class, 'index']);
 Route::get('/article', [UserController::class, 'article']);
-Route::get('/article/detail', [UserController::class, 'articleDetail']);
+Route::get('/article/{id}', [UserController::class, 'articleDetail']);
+Route::get('/notifikasi', [UserController::class, 'notifikasi']);
+Route::get('/profiles', [UserController::class, 'profiles']);
 
 
 Route::get('/dashboard', function () {
