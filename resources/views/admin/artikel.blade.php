@@ -82,11 +82,7 @@
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Kirim formulir untuk menghapus data
                     form.submit();
-
-                    // Tampilkan pesan sukses setelah penghapusan berhasil
-                    // (opsional, hanya tampil jika penghapusan berhasil di server)
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",

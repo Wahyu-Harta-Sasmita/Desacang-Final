@@ -317,9 +317,15 @@ class OperatorController extends Controller
             // Cari data penduduk berdasarkan ID
             $penduduk = Penduduk::findOrFail($id);
 
-            // Hapus data relasi jika ada
+            // Hapus relasi jika ada
+            // Cek dan hapus data terkait pada relasi 'bantuan'
             if ($penduduk->bantuan) {
-                $penduduk->bantuan->delete(); // Pastikan relasi didefinisikan di model Penduduk
+                $penduduk->bantuan->penduduks()->where('id_penduduk', $penduduk->id_penduduk)->delete();
+            }
+
+            // Cek dan hapus data terkait pada relasi 'validasi'
+            if ($penduduk->validasi) {
+                $penduduk->validasi()->delete();
             }
 
             // Hapus data utama
@@ -332,6 +338,7 @@ class OperatorController extends Controller
             return redirect()->route('datapenduduk')->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
     }
+
 
     public function search(Request $request)
     {

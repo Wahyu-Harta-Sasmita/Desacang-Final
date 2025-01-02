@@ -114,6 +114,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
                 }
             });
         }
