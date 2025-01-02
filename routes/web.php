@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ArtikelController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,12 +43,13 @@ Route::get('/formadd/create', [OperatorController::class, 'create']) -> name('fo
 Route::post('/formadd', [OperatorController::class, 'store'])->name('formadd.store');
 Route::get('/formedit', [OperatorController::class, 'editdata']) -> name('formedit');
 Route::get('/validasidata', [OperatorController::class, 'validasidata']) -> name('validasidata');
-Route::get('/artikel', [OperatorController::class, 'artikel']) -> name('artikel');
 Route::get('/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/detailpenduduk', [OperatorController::class, 'detailpenduduk']) -> name('detailpenduduk');
 Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datapenduduk');
 Route::patch('/validasidata/{user_id}/validate', [OperatorController::class, 'validate'])->name('validate');
+Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel');
+Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.add');
 
 });
 

@@ -6,6 +6,7 @@
     <title>Operator Desa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-700 h-screen overflow-hidden">
@@ -45,7 +46,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('artikel') }}"
+                        <a href="{{ route('admin.artikel') }}"
                             class="flex gap-3 p-2 rounded hover:bg-gray-700 {{ request()->routeIs('artikel') ? 'bg-gray-700' : '' }}">
                             <span class="text-lg font-bold">Artikel</span>
                         </a>

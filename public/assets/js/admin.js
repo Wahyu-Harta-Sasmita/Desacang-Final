@@ -44,8 +44,8 @@ window.addEventListener('click', (e) => {
     }
 });
 
- // Data Banjar
- const banjarOptions = {
+// Data Banjar
+const banjarOptions = {
     "Desa Bungkulan": ["Banjar Dinas Alas Harum", "Banjar Dinas Ancak", "Banjar Dinas Badung", "Banjar Dinas Dauh Munduk", "Banjar Dinas Jro Gusti", "Banjar Dinas Jro Wargi", "Banjar Dinas Kubukelod", "Banjar Dinas Pamesan", "Banjar Dinas Punduh Lo", "Banjar Dinas Punduh Sangsit", "Banjar Dinas Sari", "Banjar Dinas Satria", "Banjar Dinas Sema"],
     "Desa Temukus": ["Banjar Bingin Banjah", "Banjar Dinas Labuhan Aji", "Banjar Dinas Pegayaman", "Banjar Dinas Tengah"]
 };
@@ -67,6 +67,18 @@ desaSelect.addEventListener('change', () => {
             option.value = banjar;
             option.textContent = banjar;
             banjarSelect.appendChild(option);
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof successMessage !== 'undefined' && successMessage !== '') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: successMessage,
+            showConfirmButton: false,
+            timer: 2000
         });
     }
 });

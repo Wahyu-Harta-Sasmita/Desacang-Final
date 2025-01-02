@@ -14,7 +14,7 @@ class ArtikelController extends Controller
     public function index()
     {
         $artikels = Article::all();
-        return view('admin.artikel', compact('artikel'));
+        return view('admin.artikel', compact('artikels'));
     }
 
     /**
@@ -32,16 +32,26 @@ class ArtikelController extends Controller
     {
         $request->validate([
             'judul' => 'required|max:255',
-            'article' => 'required',
+            'article' => 'required|file|mimes:doc,docx,pdf|max:2048',
+            'cover_article' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $path = $request->file('article')->store('assets/uploads/article', 'public');
+        // Upload file artikel
+        $articlePath = $request->file('article')->store('assets/uploads/artikel', 'public');
 
+        // Upload cover artikel (jika ada)
+        $coverPath = null;
+        if ($request->hasFile('cover_article')) {
+            $coverPath = $request->file('cover_article')->store('assets/uploads/artikel_cover', 'public');
+        }
+
+        // Simpan data ke database
         Article::create([
-            'user_id' => auth()->id(), // Otomatis mengambil user ID dari pengguna yang sedang login
+            'user_id' => auth()->id(), // ID pengguna yang sedang login
             'judul' => $request->judul,
-            'path_article' => 'assets/uploads/article/',
-            'article' => $path,
+            'cover_article' => $coverPath ?? 'assets/uploads/artikel_cover/', // Gunakan default jika tidak ada
+            'path_article' => 'assets/uploads/artikel/',
+            'article' => $articlePath,
         ]);
 
         return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil ditambahkan');
@@ -76,6 +86,6 @@ class ArtikelController extends Controller
      */
     public function destroy(string $id)
     {
-        
+
     }
 }

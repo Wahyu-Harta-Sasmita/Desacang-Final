@@ -14,25 +14,37 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Judul</th>
-                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Tanggal</th>
-                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Foto</th>
-                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Konten</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Cover</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">File</th>
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Panduan Pengelolaan Sampah Desa</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">26 Desember 2024</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                            <img src="https://via.placeholder.com/100" alt="Foto Sampah Desa" class="w-24 h-24 object-cover">
-                        </td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Panduan lengkap untuk mengelola sampah secara efektif di desa...</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                            <button class="text-blue-600 hover:underline mr-2">Edit</button>
-                            <button class="text-red-600 hover:underline mr-2">Delete</button>
-                        </td>
-                    </tr>
+                    @forelse($artikels as $artikel)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->judul }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                @if($artikel->cover_article)
+                                    <img src="{{ asset('assets/uploads/artikel_cover' . $artikel->cover_article) }}" alt="Cover Artikel"
+                                        class="w-24 h-24 object-cover">
+                                @else
+                                    <span class="text-gray-500">Tidak ada cover</span>
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                <a href="{{ asset('assets/uploads/artikel' . $artikel->article) }}" target="_blank"
+                                    class="text-blue-600 hover:underline">Lihat File</a>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800"> 
+                                <button type="submit" class="text-red-600 hover:underline">Hapus</button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="border border-gray-300 p-3 text-center text-gray-500">Belum ada artikel
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -42,38 +54,43 @@
     <div id="formOverlay" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white p-6 rounded shadow w-full max-w-lg">
             <h2 class="text-lg font-semibold mb-4 text-gray-700">Form Tambah Artikel</h2>
-            <form action="#" method="post" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('artikel.add') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-4">
+                @csrf
                 <!-- Input Judul -->
                 <div>
                     <label for="judul" class="block text-sm font-medium text-gray-700">Judul Artikel</label>
-                    <input type="text" id="judul" name="judul" class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700" placeholder="Masukkan judul artikel">
+                    <input type="text" id="judul" name="judul"
+                        class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700"
+                        placeholder="Masukkan judul artikel" required>
                 </div>
-                <!-- Input Tanggal -->
+                <!-- Upload File Cover -->
                 <div>
-                    <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
-                    <input type="date" id="tanggal" name="tanggal" class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700">
+                    <label for="cover_article" class="block text-sm font-medium text-gray-700">Unggah Cover
+                        Artikel</label>
+                    <input type="file" id="cover_article" name="cover_article" accept=".jpg,.jpeg,.png"
+                        class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700">
                 </div>
-                <!-- Input Konten -->
+                <!-- Upload File Artikel -->
                 <div>
-                    <label for="konten" class="block text-sm font-medium text-gray-700">Konten Artikel</label>
-                    <textarea id="konten" name="konten" rows="5" class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700" placeholder="Tulis konten artikel di sini"></textarea>
-                </div>
-                <!-- Upload Foto -->
-                <div>
-                    <label for="foto" class="block text-sm font-medium text-gray-700">Unggah Foto</label>
-                    <input type="file" id="foto" name="foto" accept="image/*" class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700">
+                    <label for="article" class="block text-sm font-medium text-gray-700">Unggah File Artikel</label>
+                    <input type="file" id="article" name="article" accept=".doc,.docx,.pdf"
+                        class="mt-1 block w-full border border-gray-300 rounded p-2 text-gray-700" required>
                 </div>
                 <!-- Tombol -->
                 <div class="text-right">
-                    <button type="button" onclick="toggleForm()" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Tutup</button>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Simpan</button>
+                    <button type="button" onclick="toggleForm()"
+                        class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Tutup</button>
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
+
     <!-- JavaScript -->
     <script src="{{asset('assets/js/admin.js')}}">
-       
+         var successMessage = "{{ session('success') ?? '' }}";
     </script>
 </x-sidebar-layout>
