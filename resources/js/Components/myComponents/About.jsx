@@ -48,10 +48,7 @@ const About = () => {
                             <div key={article.id_article} className="p-4 w-80">
                                 <div className="bg-white rounded-lg shadow-md overflow-hidden h-[420px] flex flex-col">
                                     <img
-                                        src={
-                                            article.cover_article ||
-                                            "https://via.placeholder.com/150"
-                                        }
+                                        src={`/assets/uploads/article_cover/${article.cover_article}`}
                                         alt={article.judul}
                                         className="w-full h-[192px] object-cover"
                                     />

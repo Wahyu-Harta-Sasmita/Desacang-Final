@@ -153,10 +153,7 @@ const Profile = () => {
                                     </h3>
                                     <div className="flex justify-center items-center bg-gray-200 p-4 rounded-lg shadow-md">
                                         <img
-                                            src={
-                                                penduduk[0].foto_kk ||
-                                                "/assets/images/default.jpg"
-                                            }
+                                            src={`assets/uploads/kk/${penduduk.kk}`}
                                             alt="Foto Kartu Keluarga"
                                             className="w-full h-[300px] object-cover rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                                         />
@@ -168,10 +165,7 @@ const Profile = () => {
                                     </h3>
                                     <div className="flex justify-center items-center bg-gray-200 p-4 rounded-lg shadow-md">
                                         <img
-                                            src={
-                                                penduduk[0].foto_rumah ||
-                                                "/assets/images/default.jpg"
-                                            }
+                                            src={`assets/uploads/rumah/${penduduk.rumah}`}
                                             alt="Foto Rumah"
                                             className="w-full h-[300px] object-cover rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                                         />
