@@ -9,11 +9,11 @@ return new class extends Migration
     {
         Schema::create('notifikasis', function (Blueprint $table) {
             $table->id('id_notifikasi');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('judul', 255);
             $table->text('pesan');
             $table->string('tipe', 10);
-            $table->timestamp('read_at')->nullable();
+            $table->timestamp('read_at');
         });
     }
 

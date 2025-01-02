@@ -10,7 +10,7 @@ return new class extends Migration
         Schema::create('komentars', function (Blueprint $table) {
             $table->id('id_komentar');
             $table->string('komentar', 255);
-            $table->foreignId('id_pengguna')->constrained('users');
+            $table->foreignId('id_pengguna')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

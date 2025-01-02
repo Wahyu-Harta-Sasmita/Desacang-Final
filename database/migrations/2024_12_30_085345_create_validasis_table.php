@@ -9,10 +9,10 @@ return new class extends Migration
     {
         Schema::create('validasis', function (Blueprint $table) {
             $table->id('id_validasi');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('status', 10)->default('pending');
             $table->timestamp('validate_at')->nullable();
-            $table->timestamps(); // Tambahkan kolom timestamps
+            $table->timestamps();
         });
     }
 

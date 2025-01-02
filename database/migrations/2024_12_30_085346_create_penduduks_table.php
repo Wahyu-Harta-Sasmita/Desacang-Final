@@ -9,8 +9,8 @@ return new class extends Migration
     {
         Schema::create('penduduks', function (Blueprint $table) {
             $table->id('id_penduduk');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('validasi_id')->nullable()->constrained('validasis', 'id_validasi');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('validasi_id')->nullable()->constrained('validasis', 'id_validasi')->onDelete('set null')->onUpdate('cascade');
             $table->string('nama', 50);
             $table->string('nik', 16);
             $table->string('kepala_keluarga', 50);
@@ -28,9 +28,9 @@ return new class extends Migration
             $table->string('rumah', 255);
             $table->string('path_kk', 255)->default('assets/uploads/kk/');
             $table->string('kk', 255);
-            $table->foreignId('bantuan_id')->constrained('bantuans', 'id_bantuan');
+            $table->foreignId('bantuan_id')->constrained('bantuans', 'id_bantuan')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-        });
+        });        
     }
 
     public function down()

@@ -9,7 +9,7 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id('id_article');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('judul', 255);
             $table->string('cover_article', 255)->default('assets/uploads/article_cover/');
             $table->string('path_article', 255)->default('assets/uploads/article/');
