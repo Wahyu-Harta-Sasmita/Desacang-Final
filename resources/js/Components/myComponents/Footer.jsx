@@ -4,7 +4,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-500 text-white py-6">
+    <footer className="bg-gray-800 text-white py-6">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         <div className="text-lg font-bold mb-4 md:mb-0">
           DESACANG
@@ -13,9 +13,6 @@ const Footer = () => {
         <nav className="flex space-x-6 mb-4 md:mb-0">
           <Link href="/home" className="hover:underline">
             Home
-          </Link>
-          <Link href="/about" className="hover:underline">
-            About
           </Link>
           <Link href="/article" className="hover:underline">
             Article

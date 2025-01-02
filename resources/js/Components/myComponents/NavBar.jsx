@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/react";
 
 const NavBar = () => {
     return (
-        <nav className="bg-blue-500 shadow-md py-4 text-white">
+        <nav className="bg-gray-800 shadow-md py-4 text-white">
             <div className="container mx-auto flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <Link href="/home">
@@ -17,13 +17,6 @@ const NavBar = () => {
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <Link
-                        href="/article"
-                        className=" hover:text-gray-800 transition duration-200 font-medium"
-                    >
-                        About
-                    </Link>
-
                     <Link
                         href="/article"
                         className=" hover:text-gray-800 transition duration-200 font-medium"
