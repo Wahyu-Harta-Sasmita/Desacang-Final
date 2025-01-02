@@ -65,13 +65,16 @@
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                 <!-- Tombol Edit -->
-                                <a href="#" class="text-yellow-600 hover:underline">Edit</a>
+                                <a href="{{ route('datapenduduk.edit', $p->id_penduduk) }}"
+                                    class="text-yellow-600 hover:underline">Edit</a>
+
                                 <!-- Form Hapus -->
-                                <form action="#">
+                                <form action="{{ route('datapenduduk.destroy', $p->id_penduduk) }}" method="POST"
+                                    style="display:inline-block;" id="delete-form-{{ $p->id_penduduk }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                    <button type="button" class="text-red-600 hover:underline"
+                                        onclick="confirmDelete('{{ $p->id_penduduk }}')">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -86,11 +89,34 @@
         </div>
 
         <div class="flex justify-between items-center mt-6">
-            <div class="flex items-center space-x-1">
+            <div class="mt-4 flex justify-center">
                 {{ $penduduk->links() }}
             </div>
             <a href="{{ route('formadd') }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tambah
                 Data</a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(id) {
+            const form = document.getElementById(`delete-form-${id}`);
+
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    </script>
+
 </x-sidebar-layout>

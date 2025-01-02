@@ -45,8 +45,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('artikel') }}"
-                            class="flex gap-3 p-2 rounded hover:bg-gray-700 {{ request()->routeIs('artikel') ? 'bg-gray-700' : '' }}">
+                        <a href="{{ route('admin.artikel') }}"
+                            class="flex gap-3 p-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.artikel') ? 'bg-gray-700' : '' }}">
                             <span class="text-lg font-bold">Artikel</span>
                         </a>
                     </li>
@@ -95,9 +95,6 @@
 
         </div>
     </div>
-
-    <!-- JavaScript -->
     <script src="{{asset('assets/js/admin.js')}}"></script>
-</body>
-
+</body> 
 </html>
