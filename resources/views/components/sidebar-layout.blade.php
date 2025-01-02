@@ -47,7 +47,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.artikel') }}"
-                            class="flex gap-3 p-2 rounded hover:bg-gray-700 {{ request()->routeIs('artikel') ? 'bg-gray-700' : '' }}">
+                            class="flex gap-3 p-2 rounded hover:bg-gray-700 {{ request()->routeIs('admin.artikel') ? 'bg-gray-700' : '' }}">
                             <span class="text-lg font-bold">Artikel</span>
                         </a>
                     </li>

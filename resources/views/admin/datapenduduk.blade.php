@@ -65,9 +65,12 @@
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                 <!-- Tombol Edit -->
-                                <a href="#" class="text-yellow-600 hover:underline">Edit</a>
+                                <a href="{{ route('datapenduduk.edit', $p->id_penduduk) }}"
+                                    class="text-yellow-600 hover:underline">Edit</a>
+
                                 <!-- Form Hapus -->
-                                <form action="#">
+                                <form action="{{ route('datapenduduk.destroy', $p->id_penduduk) }}" method="POST"
+                                    style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:underline"

@@ -38,18 +38,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [OperatorController::class, 'dashboard']) -> name('admin');
 Route::get('/', [OperatorController::class, 'dashboard']) -> name('admin.dashboard');
 Route::get('/datapenduduk', [OperatorController::class, 'datapenduduk']) -> name('datapenduduk');
+Route::delete('/datapenduduk/{id}', [OperatorController::class, 'destroy'])->name('datapenduduk.destroy');
+Route::get('/datapenduduk/{id}/edit', [OperatorController::class, 'edit'])->name('datapenduduk.edit');
+Route::put('/datapenduduk/{id}', [OperatorController::class, 'update'])->name('datapenduduk.update');
 Route::get('/formadd', [OperatorController::class, 'create']) -> name('formadd');
 Route::get('/formadd/create', [OperatorController::class, 'create']) -> name('formadd.create');
 Route::post('/formadd', [OperatorController::class, 'store'])->name('formadd.store');
-Route::get('/formedit', [OperatorController::class, 'editdata']) -> name('formedit');
 Route::get('/validasidata', [OperatorController::class, 'validasidata']) -> name('validasidata');
 Route::get('/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/detailpenduduk', [OperatorController::class, 'detailpenduduk']) -> name('detailpenduduk');
 Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datapenduduk');
 Route::patch('/validasidata/{user_id}/validate', [OperatorController::class, 'validate'])->name('validate');
+Route::get('/addartikel', [OperatorController::class, 'addartikel'])->name('addartikel');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel');
 Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.add');
+Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
 
 });
 

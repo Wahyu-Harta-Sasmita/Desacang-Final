@@ -82,3 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+ClassicEditor
+    .create(document.querySelector('#deskripsi'))
+    .catch(error => {
+        console.error(error);
+    });

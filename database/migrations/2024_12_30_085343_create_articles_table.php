@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('cover_article', 255)->default('assets/uploads/article_cover/');
             $table->string('path_article', 255)->default('assets/uploads/article/');
             $table->string('article', 255);
+            $table->string('deskripsi', 255);
             $table->timestamps();
         });
     }

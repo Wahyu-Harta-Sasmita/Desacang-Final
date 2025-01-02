@@ -1,10 +1,9 @@
 <x-sidebar-layout>
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-        <!-- Card: Total Penduduk -->
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2 text-gray-700">Total Penduduk</h2>
-            <p class="text-3xl font-bold text-gray-800">1,234</p>
+            <p class="text-3xl font-bold text-gray-800">{{ number_format($totalPenduduk) }}</p>
             <p class="text-sm text-gray-500">Data terkini</p>
         </div>
 
@@ -19,11 +18,12 @@
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2 text-gray-700">Kategori Penduduk</h2>
             <ul class="text-sm text-gray-600 space-y-1">
-                <li>Krama Desa Adat: 800</li>
-                <li>Krama Tamiu: 300</li>
-                <li>Tamiu: 134</li>
+                @foreach ($kategoriPenduduk as $kategori => $jumlah)
+                    <li>{{ $kategori }}: {{ number_format($jumlah) }}</li>
+                @endforeach
             </ul>
         </div>
+
     </div>
 
     <!-- Data Penduduk Tervalidasi -->
