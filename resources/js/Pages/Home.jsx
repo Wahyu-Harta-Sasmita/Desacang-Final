@@ -1,14 +1,13 @@
-import React from 'react'
-import NavBar from '@/Components/myComponents/NavBar'
 import Beranda from '@/Components/myComponents/Beranda'
-import Footer from '@/Components/myComponents/Footer'
+import BerandaLayout from '@/Layouts/BerandaLayout'
+import React from 'react'
 
 const Home = () => {
   return (
     <>
-      <NavBar />
-      <Beranda />
-      <Footer />
+      <BerandaLayout>
+        <Beranda />
+      </BerandaLayout>
     </>
   )
 }

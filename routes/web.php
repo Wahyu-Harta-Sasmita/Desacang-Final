@@ -3,6 +3,7 @@
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,9 +17,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', function () {
-    return Inertia::render('Home');
-});
+Route::get('/home', [UserController::class, 'index']);
+Route::get('/article', [UserController::class, 'article']);
+Route::get('/article/detail', [UserController::class, 'articleDetail']);
 
 
 Route::get('/dashboard', function () {

@@ -1,9 +1,11 @@
+import BerandaLayout from "@/Layouts/BerandaLayout";
+import { Link } from "@inertiajs/react";
 import React from "react";
 
 const Article = () => {
     return (
         <>
-            <div className="flex flex-wrap justify-center gap-5">
+            <div className="flex py-10 flex-wrap justify-center gap-5">
                 <div className="p-4 w-80">
                     <div className="bg-white rounded-lg shadow-md overflow-hidden h-100 flex flex-col">
                         <img
@@ -23,7 +25,7 @@ const Article = () => {
                         </div>
                         <div className="p-4 border-t border-gray-200">
                             <Link
-                                href="#"
+                                href="/articleDetail"
                                 className="text-blue-500 hover:text-blue-600 font-semibold"
                             >
                                 Selengkapnya
@@ -36,4 +38,7 @@ const Article = () => {
     );
 };
 
-export default Article;
+
+Article.layout = (page) => <BerandaLayout>{page}</BerandaLayout>;
+
+export default Article

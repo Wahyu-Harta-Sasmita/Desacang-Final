@@ -19,7 +19,7 @@ const NavBar = () => {
                 <div className="flex items-center gap-6">
                     <Link
                         href="/article"
-                        className=" hover:text-gray-800 transition duration-200 font-medium"
+                        className=" hover:bg-gray-400 hover:text-black rounded-md py-2 px-4 transition duration-200 font-medium"
                     >
                         Article
                     </Link>

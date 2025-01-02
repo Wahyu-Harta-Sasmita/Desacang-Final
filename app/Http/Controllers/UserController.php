@@ -11,7 +11,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('Home');
+    }
+
+    public function article()
+    {
+        return inertia('Articles');
+    }
+
+    public function articleDetail()
+    {
+        return inertia('ArticleDetails');
     }
 
     /**
