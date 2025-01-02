@@ -10,7 +10,7 @@
         <!-- Card: Data Belum Validasi -->
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2 text-gray-700">Data Belum Validasi</h2>
-            <p class="text-3xl font-bold text-gray-800">56</p>
+            <p class="text-3xl font-bold text-gray-800">{{ $belumValidasi }}</p>
             <p class="text-sm text-gray-500">Menunggu validasi</p>
         </div>
 

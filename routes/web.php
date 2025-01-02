@@ -56,7 +56,6 @@ Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.add'
 Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
 Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
-
 });
 
 

@@ -6,7 +6,6 @@
     <title>Operator Desa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-700 h-screen overflow-hidden">
@@ -96,9 +95,6 @@
 
         </div>
     </div>
-
-    <!-- JavaScript -->
     <script src="{{asset('assets/js/admin.js')}}"></script>
-</body>
-
+</body> 
 </html>

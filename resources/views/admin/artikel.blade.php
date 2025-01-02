@@ -44,11 +44,11 @@
 
                                 <!-- Tombol Hapus -->
                                 <form action="{{ route('artikel.delete', $artikel->id_article) }}" method="POST"
-                                    style="display:inline-block;">
+                                    style="display:inline-block;" id="delete-form-{{ $artikel->id_article }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">Hapus</button>
+                                    <button type="button" class="text-red-600 hover:underline"
+                                        onclick="confirmDelete('{{ $artikel->id_article }}')">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -66,5 +66,34 @@
     <!-- JavaScript -->
     <script src="{{ asset('assets/js/admin.js') }}">
         var successMessage = "{{ session('success') ?? '' }}";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(id) {
+            const form = document.getElementById(`delete-form-${id}`);
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim formulir untuk menghapus data
+                    form.submit();
+
+                    // Tampilkan pesan sukses setelah penghapusan berhasil
+                    // (opsional, hanya tampil jika penghapusan berhasil di server)
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
     </script>
 </x-sidebar-layout>

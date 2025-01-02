@@ -10,6 +10,8 @@ class OperatorController extends Controller
 {
     public function dashboard()
     {
+        $belumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
+
         $kategoriPenduduk = [
             'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
             'Krama Tamiu' => Penduduk::where('kategori', 'Krama Tamiu')->count(),
@@ -17,7 +19,7 @@ class OperatorController extends Controller
         ];
 
         $totalPenduduk = Penduduk::count();
-        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk'));
+        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'belumValidasi'));
     }
 
     public function datapenduduk()

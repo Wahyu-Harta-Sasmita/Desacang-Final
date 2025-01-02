@@ -70,11 +70,11 @@
 
                                 <!-- Form Hapus -->
                                 <form action="{{ route('datapenduduk.destroy', $p->id_penduduk) }}" method="POST"
-                                    style="display:inline-block;">
+                                    style="display:inline-block;" id="delete-form-{{ $p->id_penduduk }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                    <button type="button" class="text-red-600 hover:underline"
+                                        onclick="confirmDelete('{{ $p->id_penduduk }}')">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -96,4 +96,27 @@
                 Data</a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(id) {
+            const form = document.getElementById(`delete-form-${id}`);
+
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    </script>
+
 </x-sidebar-layout>

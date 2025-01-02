@@ -70,21 +70,3 @@ desaSelect.addEventListener('change', () => {
         });
     }
 });
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (typeof successMessage !== 'undefined' && successMessage !== '') {
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: successMessage,
-            showConfirmButton: false,
-            timer: 2000
-        });
-    }
-});
-
-ClassicEditor
-    .create(document.querySelector('#deskripsi'))
-    .catch(error => {
-        console.error(error);
-    });
