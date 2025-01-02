@@ -106,9 +106,10 @@ class OperatorController extends Controller
     }
 
 
-    public function detailpenduduk()
+    public function detailpenduduk($id)
     {
-        return view('admin.pendudukdetail');
+        $penduduk = Penduduk::with('bantuan')->findOrFail($id); // Jika ada relasi bantuan
+        return view('admin.pendudukdetail', compact('penduduk'));
     }
 
     /**

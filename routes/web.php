@@ -48,7 +48,7 @@ Route::post('/formadd', [OperatorController::class, 'store'])->name('formadd.sto
 Route::get('/validasidata', [OperatorController::class, 'validasidata']) -> name('validasidata');
 Route::get('/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
-Route::get('/detailpenduduk', [OperatorController::class, 'detailpenduduk']) -> name('detailpenduduk');
+Route::get('/detailpenduduk/{id}', [OperatorController::class, 'detailpenduduk'])->name('detailpenduduk');
 Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datapenduduk');
 Route::patch('/validasidata/{user_id}/validate', [OperatorController::class, 'validate'])->name('validate');
 Route::get('/addartikel', [OperatorController::class, 'addartikel'])->name('addartikel');

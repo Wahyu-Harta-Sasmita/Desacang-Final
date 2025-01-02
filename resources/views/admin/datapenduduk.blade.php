@@ -47,7 +47,12 @@
                 <tbody>
                     @forelse ($penduduk as $p)
                         <tr>
-                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                <a href="{{ route('detailpenduduk', $p->id_penduduk) }}"
+                                    class="text-blue-600 hover:underline">
+                                    {{ $p->nama }}
+                                </a>
+                            </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->kepala_keluarga ?? '-' }}
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $p->nik }}</td>
