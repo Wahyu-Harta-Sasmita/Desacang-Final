@@ -4,6 +4,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,9 @@ Route::get('/article', [UserController::class, 'article']);
 Route::get('/article/{id}', [UserController::class, 'articleDetail']);
 Route::get('/notifikasi', [UserController::class, 'notifikasi']);
 Route::get('/profiles', [UserController::class, 'profiles']);
+Route::get('/user/formadd', [UserController::class, 'create']) -> name('useradd.create');
+Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
+
 
 
 Route::get('/dashboard', function () {

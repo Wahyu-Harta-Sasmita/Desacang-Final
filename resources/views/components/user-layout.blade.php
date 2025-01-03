@@ -1,9 +1,13 @@
-import React from "react";
-import { Link } from "@inertiajs/react";
-
-const NavBar = () => {
-    return (
-        <nav className="bg-gray-800 shadow-md py-4 text-white">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desacang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<nav className="bg-gray-800 shadow-md py-4 text-white">
             <div className="container mx-auto flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <Link href="/home">
@@ -25,7 +29,7 @@ const NavBar = () => {
                     </Link>
 
                     <Link
-                        href="/user/formadd"
+                        href="/addForm"
                         className=" hover:bg-gray-400 hover:text-black rounded-md py-2 px-4 transition duration-200 font-medium"
                     >
                         Tambah Data
@@ -52,7 +56,46 @@ const NavBar = () => {
                 </div>
             </div>
         </nav>
-    );
-};
 
-export default NavBar;
+
+        <main>
+          {{$slot}}
+        </main>
+
+        <footer className="bg-gray-800 text-white py-6">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <div className="text-lg font-bold mb-4 md:mb-0">
+          DESACANG
+        </div>
+
+        <nav className="flex space-x-6 mb-4 md:mb-0">
+          <Link href="/home" className="hover:underline">
+            Home
+          </Link>
+          <Link href="/article" className="hover:underline">
+            Article
+          </Link>
+        </nav>
+
+        <div className="flex space-x-4 text-xl">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            <FaFacebookF />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            <FaTwitter />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            <FaInstagram />
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            <FaLinkedinIn />
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-6 text-center text-sm text-gray-200">
+        &copy; {new Date().getFullYear()} DESACANG. All rights reserved.
+      </div>
+    </footer>
+</body>
+</html>

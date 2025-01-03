@@ -25,7 +25,7 @@ const ArticleDetail = () => {
             <div className="mb-6">
                 {article.article && (
                     <embed
-                        src={`assets/uploads/article/${article.article}`}
+                        src={`/assets/uploads/article/${article.article}`}
                         type="application/pdf"
                         className="w-full h-96 border border-gray-300 rounded"
                     />
