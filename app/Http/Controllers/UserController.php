@@ -63,7 +63,7 @@ class UserController extends Controller
     public function create()
     {
         $bantuans = Bantuan::all();
-        return view('pages.addForm', compact('bantuans')); // Sesuaikan dengan lokasi file Blade Anda
+        return view('pages.addForm', compact('bantuans'));
     }
 
     /**
@@ -130,7 +130,7 @@ class UserController extends Controller
             ]);
 
             // Redirect dengan pesan sukses
-            return redirect()->route('index')->with('success', 'Data berhasil disimpan ke semua tabel.');
+            return redirect()->route('profiles')->with('success', 'Data berhasil disimpan ke semua tabel.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {

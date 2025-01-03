@@ -18,11 +18,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', [UserController::class, 'index']);
+Route::get('/home', [UserController::class, 'index'])->name('index');
 Route::get('/article', [UserController::class, 'article']);
 Route::get('/article/{id}', [UserController::class, 'articleDetail']);
 Route::get('/notifikasi', [UserController::class, 'notifikasi']);
-Route::get('/profiles', [UserController::class, 'profiles']);
+Route::get('/profiles', [UserController::class, 'profiles'])->name('profiles');
 Route::get('/user/formadd', [UserController::class, 'create']) -> name('useradd.create');
 Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
 
