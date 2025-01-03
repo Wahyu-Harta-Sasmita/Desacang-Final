@@ -25,15 +25,11 @@
                         <tr>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->judul }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                @if($artikel->cover_article)
-                                    <img src="{{ asset('assets/uploads/artikel_cover/' . $artikel->cover_article) }}"
-                                        alt="Cover Artikel" class="w-24 h-24 object-cover">
-                                @else
-                                    <span class="text-gray-500">Tidak ada cover</span>
-                                @endif
+                                <img src="{{ asset('assets/uploads/article_cover/' . $artikel->articles_cover) }}" alt="Cover Artikel"
+                                    class="w-full h-56 rounded-lg object-cover shadow">
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="{{ asset('assets/uploads/artikel/' . $artikel->article) }}" target="_blank"
+                                <a href="{{ asset('assets/uploads/article/' . $artikel->article) }}" target="_blank"
                                     class="text-blue-600 hover:underline">Lihat File</a>
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->deskripsi }}</td>

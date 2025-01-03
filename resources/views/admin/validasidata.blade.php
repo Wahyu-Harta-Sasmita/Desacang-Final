@@ -106,9 +106,7 @@
                                             @if ($penduduk->validasi?->status === 'validated')
                                                 <span class="text-green-600">Selesai</span>
                                             @else
-                                                <form method="POST" action="{{ route('validate', ['user_id' => $penduduk->user_id]) }}">
-                                                    @csrf
-                                                    @method('PATCH')
+                                                <form action="{{ route('validasicomingsoon') }}">
                                                     <button type="submit" class="text-blue-600 hover:underline">Validasi</button>
                                                 </form>
                                             @endif

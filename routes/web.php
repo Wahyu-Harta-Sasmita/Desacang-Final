@@ -53,6 +53,7 @@ Route::get('/formadd', [OperatorController::class, 'create']) -> name('formadd')
 Route::get('/formadd/create', [OperatorController::class, 'create']) -> name('formadd.create');
 Route::post('/formadd', [OperatorController::class, 'store'])->name('formadd.store');
 Route::get('/validasidata', [OperatorController::class, 'validasidata']) -> name('validasidata');
+Route::get('/validasicomingsoon', [OperatorController::class, 'validasicomingsoon']) -> name('validasicomingsoon');
 Route::get('/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/detailpenduduk/{id}', [OperatorController::class, 'detailpenduduk'])->name('detailpenduduk');
