@@ -63,7 +63,7 @@ class UserController extends Controller
     public function create()
     {
         $bantuans = Bantuan::all();
-        return view('pages.addForm', compact('bantuans')); // Sesuaikan dengan lokasi file Blade Anda
+        return view('pages.addForm', compact('bantuans'));
     }
 
     /**

@@ -1,13 +1,13 @@
 <x-sidebar-layout>
     <!-- Button Tambah Artikel -->
-    <div class="mb-4 flex">
+    <div class="mb-6 mt-6 flex">
         <a href="{{ route('addartikel') }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 ml-auto">
             Tambah Artikel
         </a>
     </div>
 
     <!-- Daftar Artikel Section -->
-    <section class="bg-white p-6 rounded shadow">
+    <section class="bg-white p-8 rounded shadow">
         <h2 class="text-lg font-semibold mb-4 text-gray-700">Daftar Artikel</h2>
         <div class="overflow-x-auto">
             <table class="w-full border-collapse border border-gray-200">
@@ -25,8 +25,8 @@
                         <tr>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->judul }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <img src="{{ asset('assets/uploads/article_cover/' . $artikel->articles_cover) }}" alt="Cover Artikel"
-                                    class="w-full h-56 rounded-lg object-cover shadow">
+                                <img src="{{ asset('assets/uploads/article_cover/' . $artikel->articles_cover) }}"
+                                    alt="Cover Artikel" class="w-full h-56 rounded-lg object-cover shadow">
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                 <a href="{{ asset('assets/uploads/article/' . $artikel->article) }}" target="_blank"
@@ -34,18 +34,24 @@
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->deskripsi }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <!-- Tombol Edit -->
-                                <a href="{{ route('artikel.edit', $artikel->id_article) }}"
-                                    class="text-yellow-600 hover:underline mr-2">Edit</a>
-
-                                <!-- Tombol Hapus -->
-                                <form action="{{ route('artikel.delete', $artikel->id_article) }}" method="POST"
-                                    style="display:inline-block;" id="delete-form-{{ $artikel->id_article }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="text-red-600 hover:underline"
-                                        onclick="confirmDelete('{{ $artikel->id_article }}')">Delete</button>
-                                </form>
+                                <div class="flex items-center space-x-3">
+                                    <!-- Tombol Edit -->
+                                    <a href="{{ route('artikel.edit', $artikel->id_article) }}"
+                                        class="flex items-center text-yellow-600 hover:underline">
+                                        <img class="w-5 h-5 mr-2" src="{{ asset('assets/icon/Edit.png') }}" alt="Edit Icon">
+                                    </a>
+                                    <!-- Tombol Hapus -->
+                                    <form action="{{ route('artikel.delete', $artikel->id_article) }}" method="POST"
+                                        style="display:inline-block;" id="delete-form-{{ $artikel->id_article }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="flex items-center text-red-600 hover:underline"
+                                            onclick="confirmDelete('{{ $artikel->id_article }}')">
+                                            <img class="w-5 h-5 mr-2" src="{{ asset('assets/icon/Delete.png') }}"
+                                                alt="Delete Icon">
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

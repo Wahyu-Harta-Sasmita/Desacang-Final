@@ -18,11 +18,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', [UserController::class, 'index']);
+Route::get('/home', [UserController::class, 'index'])->name('index');
 Route::get('/article', [UserController::class, 'article']);
 Route::get('/article/{id}', [UserController::class, 'articleDetail']);
 Route::get('/notifikasi', [UserController::class, 'notifikasi']);
-Route::get('/profiles', [UserController::class, 'profiles']);
+Route::get('/profiles', [UserController::class, 'profiles'])->name('profiles');
 Route::get('/user/formadd', [UserController::class, 'create']) -> name('useradd.create');
 Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
 
@@ -61,7 +61,7 @@ Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datape
 Route::patch('/validasidata/{user_id}/validate', [OperatorController::class, 'validate'])->name('validate');
 Route::get('/addartikel', [OperatorController::class, 'addartikel'])->name('addartikel');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel');
-Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.add');
+Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.add');
 Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
 Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');

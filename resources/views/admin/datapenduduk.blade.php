@@ -69,18 +69,23 @@
                                 @endif
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <!-- Tombol Edit -->
-                                <a href="{{ route('datapenduduk.edit', $p->id_penduduk) }}"
-                                    class="text-yellow-600 hover:underline">Edit</a>
+                                <div class="flex items-center space-x-3">
+                                    <!-- Tombol Edit -->
+                                    <a href="{{ route('datapenduduk.edit', $p->id_penduduk) }}">
+                                        <img class="w-6 h-6" src="{{ asset('assets/icon/Edit.png') }}" alt="Edit Icon">
+                                    </a>
 
-                                <!-- Form Hapus -->
-                                <form action="{{ route('datapenduduk.destroy', $p->id_penduduk) }}" method="POST"
-                                    style="display:inline-block;" id="delete-form-{{ $p->id_penduduk }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="text-red-600 hover:underline"
-                                        onclick="confirmDelete('{{ $p->id_penduduk }}')">Delete</button>
-                                </form>
+                                    <!-- Form Hapus -->
+                                    <form action="{{ route('datapenduduk.destroy', $p->id_penduduk) }}" method="POST"
+                                        id="delete-form-{{ $p->id_penduduk }}" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete('{{ $p->id_penduduk }}')">
+                                            <img class="w-6 h-6" src="{{ asset('assets/icon/Delete.png') }}"
+                                                alt="Delete Icon">
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty
