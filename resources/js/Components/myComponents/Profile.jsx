@@ -9,15 +9,15 @@ const Profile = () => {
         <div className="p-6 bg-gray-50 min-h-screen">
             <div className="max-w-7xl mx-auto bg-white shadow-xl rounded-xl p-8">
                 <div className="flex justify-between mb-8">
-                <h1 className="text-4xl font-semibold text-center text-gray-900">
-                    Profilku
-                </h1>
-                <Link
-                    href="#"
-                    className="p-3 bg-blue-500 text-white font-bold rounded-lg mt-6"
-                >
-                    Edit Dataku
-                </Link>
+                    <h1 className="text-4xl font-semibold text-center text-gray-900">
+                        Profilku
+                    </h1>
+                    <Link
+                        href="#"
+                        className="p-3 bg-blue-500 text-white font-bold rounded-lg mt-6"
+                    >
+                        Edit Dataku
+                    </Link>
                 </div>
                 {penduduk.length === 0 ? (
                     <div className="text-center text-gray-500">
@@ -87,8 +87,7 @@ const Profile = () => {
                                             </td>
                                             <td className="font-medium">:</td>
                                             <td>
-                                                {profile.bantuan
-                                                    ?.jenis_bantuan ||
+                                                {profile.bantuan?.jenis_bantuan ||
                                                     "Tidak ada bantuan"}
                                             </td>
                                         </tr>
@@ -154,6 +153,7 @@ const Profile = () => {
                                     <div className="flex justify-center items-center bg-gray-200 p-4 rounded-lg shadow-md">
                                         <img
                                             src={`/assets/uploads/kk/${penduduk.kk}`}
+                                            src={`/assets/uploads/kk/${penduduk[0]?.kk || "default.jpg"}`}
                                             alt="Foto Kartu Keluarga"
                                             className="w-full h-[300px] object-cover rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                                         />
@@ -166,6 +166,7 @@ const Profile = () => {
                                     <div className="flex justify-center items-center bg-gray-200 p-4 rounded-lg shadow-md">
                                         <img
                                             src={`/assets/uploads/rumah/${penduduk.rumah}`}
+                                            src={`/assets/uploads/rumah/${penduduk[0]?.rumah || "default.jpg"}`}
                                             alt="Foto Rumah"
                                             className="w-full h-[300px] object-cover rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                                         />
