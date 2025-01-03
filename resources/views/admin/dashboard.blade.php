@@ -10,7 +10,7 @@
         <!-- Card: Data Belum Validasi -->
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2 text-gray-700">Data Belum Validasi</h2>
-            <p class="text-3xl font-bold text-gray-800">{{ $belumValidasi }}</p>
+            <p class="text-3xl font-bold text-gray-800">{{ $totalbelumValidasi }}</p>
             <p class="text-sm text-gray-500">Menunggu validasi</p>
         </div>
     </div>
@@ -33,23 +33,14 @@
                         <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Made Aditya</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Krama Desa Adat</td>
-                        <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Ni Luh Ayu</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Krama Tamiu</td>
-                        <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Putu Widi</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Tamiu</td>
-                        <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
-                    </tr>
-                </tbody>
+                    @foreach ($tervalidasi as $item)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
             </table>
         </div>
         <div class="text-right mt-2">
@@ -70,21 +61,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">I Gusti Rai</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Krama Desa Adat</td>
-                        <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Kadek Artha</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Krama Tamiu</td>
-                        <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Komang Devi</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">Tamiu</td>
-                        <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
-                    </tr>
+                    @foreach ($belumValidasi as $item)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

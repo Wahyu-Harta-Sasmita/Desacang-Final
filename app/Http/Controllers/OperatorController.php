@@ -10,7 +10,9 @@ class OperatorController extends Controller
 {
     public function dashboard()
     {
-        $belumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
+        $tervalidasi = Validasi::where('status', 'tervalidasi')->get();
+        $totalbelumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
+        $belumValidasi = Validasi::where('status', 'belum tervalidasi')->get();
 
         $kategoriPenduduk = [
             'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
@@ -19,7 +21,7 @@ class OperatorController extends Controller
         ];
 
         $totalPenduduk = Penduduk::count();
-        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'belumValidasi'));
+        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi'));
     }
 
     public function datapenduduk()
@@ -77,7 +79,7 @@ class OperatorController extends Controller
 
         // Lakukan validasi
         $penduduk->validasi()->updateOrCreate(
-            ['penduduk_id' => $penduduk->id],
+            ['id_penduduk' => $penduduk->id_penduduk],
             ['status' => 'validated']
         );
 

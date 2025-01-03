@@ -95,11 +95,11 @@
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->desa }}</td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->banjar }}</td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset($penduduk->path_rumah) }}" download
+                                            <a href="{{ asset('assets/uploads/rumah'. $penduduk->rumah) }}" download
                                                 class="text-blue-600 hover:underline">Unduh Dokumen</a>
                                         </td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset($penduduk->path_kk) }}" download
+                                            <a href="{{ asset('assets/uploads/kk'. $penduduk->kk) }}" download
                                                 class="text-blue-600 hover:underline">Unduh Dokumen</a>
                                         </td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
@@ -119,8 +119,8 @@
                         </table>
 
                         <!-- Pagination -->
-                        <div class="mt-4">
-                            {{ $validasi->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+                        <div class="mt-4 flex justify-center">
+                            {{ $validasi->links() }}
                         </div>
                     </div>
                 @endif
