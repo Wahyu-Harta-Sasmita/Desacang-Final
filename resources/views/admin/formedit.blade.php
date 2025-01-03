@@ -2,7 +2,7 @@
     <!-- Form Edit Data -->
     <div class="bg-white p-6 rounded shadow mb-6">
         <h2 class="text-lg font-semibold mb-4 text-gray-700">Form Edit Data Penduduk</h2>
-        <form action="{{ route('datapenduduk.update', $penduduk->id_penduduk) }}" method="POST"
+        <form id="submit" action="{{ route('datapenduduk.update', $penduduk->id_penduduk) }}" method="POST"
             enctype="multipart/form-data" class="grid grid-cols-2 gap-6">
             @csrf
             @method('PUT')
@@ -142,9 +142,38 @@
             <div class="col-span-2 flex justify-end space-x-4">
                 <a href="{{ route('datapenduduk') }}"
                     class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Kembali</a>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan
-                    Perubahan</button>
+                <a id="simpan" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan
+                    Perubahan</a>
             </div>
         </form>
     </div>
+
+    @push('scripts')
+        <script>
+            document.getElementById('simpan').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data keluarga akan diperbarui!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, simpan!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kirim form hanya jika tombol "Ya, hapus!" ditekan
+                        document.getElementById('submit').submit();
+                    }
+                });
+            });
+        </script>
+    @endpush
+
+    <!-- Include SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @stack('scripts')
+
+    <script src="{{asset('assets/js/admin.js')}}"></script>
+
 </x-sidebar-layout>

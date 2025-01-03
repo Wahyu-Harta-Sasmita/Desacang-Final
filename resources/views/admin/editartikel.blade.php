@@ -60,20 +60,10 @@
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
     <script>
         // Initialize CKEditor on the textarea with ID 'deskripsi'
         CKEDITOR.replace('deskripsi');
-
-        // SweetAlert for success message
-        @if(session('success'))
-            Swal.fire({
-                title: "Berhasil!",
-                text: "{{ session('success') }}",
-                icon: "success",
-                confirmButtonText: "OK"
-            });
-        @endif
     </script>
 
 </x-sidebar-layout>

@@ -15,6 +15,10 @@
                 <table class="w-full text-lg text-left text-gray-700">
                     <tbody>
                         <tr>
+                            <td class="py-3 font-medium w-1/3">Nama:</td>
+                            <td class="py-3">{{ $penduduk->nama ?? '-' }}</td>
+                        </tr>
+                        <tr>
                             <td class="py-3 font-medium w-1/3">Nama Kepala Keluarga:</td>
                             <td class="py-3">{{ $penduduk->kepala_keluarga ?? '-' }}</td>
                         </tr>
@@ -72,14 +76,14 @@
             <!-- Foto Rumah -->
             <div>
                 <h4 class="text-xl font-semibold text-gray-800 mb-4">Foto Rumah:</h4>
-                <img src="{{ asset('assets/uploads/rumah/' . $penduduk->path_rumah) }}" alt="Foto Rumah"
+                <img src="{{ asset('assets/uploads/rumah/' . $penduduk->rumah) }}" alt="Foto Rumah"
                     class="w-full h-56 rounded-lg object-cover shadow">
 
             </div>
             <!-- Foto KK -->
             <div>
                 <h4 class="text-xl font-semibold text-gray-800 mb-4">Foto KK:</h4>
-                <img src="{{ asset('assets/uploads/kk/' . $penduduk->path_kk) }}" alt="Foto KK"
+                <img src="{{ asset('assets/uploads/kk/' . $penduduk->kk) }}" alt="Foto KK"
                     class="w-full h-56 rounded-lg object-cover shadow">
             </div>
         </div>
