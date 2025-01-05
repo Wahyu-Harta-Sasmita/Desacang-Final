@@ -1,9 +1,10 @@
 import BerandaLayout from "@/Layouts/BerandaLayout";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import React from "react";
 
 const Profile = () => {
     const { penduduk = [] } = usePage().props;
+    const idPenduduk = penduduk[0]?.id_penduduk;
 
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
@@ -13,7 +14,7 @@ const Profile = () => {
                         Profilku
                     </h1>
                     <a
-                        href="#"
+                        href={`/profiles/${idPenduduk}/edit`}
                         className="p-3 bg-blue-500 text-white font-bold rounded-lg mt-6"
                     >
                         Edit Dataku
