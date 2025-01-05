@@ -25,6 +25,8 @@ Route::get('/notifikasi', [UserController::class, 'notifikasi']);
 Route::get('/profiles', [UserController::class, 'profiles'])->name('profiles');
 Route::get('/user/formadd', [UserController::class, 'create']) -> name('useradd.create');
 Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
+Route::get('/profiles/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/profiles/{id}', [UserController::class, 'update'])->name('user.update');
 
 
 
