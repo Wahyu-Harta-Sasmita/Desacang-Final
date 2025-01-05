@@ -1,5 +1,5 @@
 import BerandaLayout from "@/Layouts/BerandaLayout";
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import React from "react";
 
 const Profile = () => {
@@ -12,12 +12,12 @@ const Profile = () => {
                     <h1 className="text-4xl font-semibold text-center text-gray-900">
                         Profilku
                     </h1>
-                    <Link
+                    <a
                         href="#"
                         className="p-3 bg-blue-500 text-white font-bold rounded-lg mt-6"
                     >
                         Edit Dataku
-                    </Link>
+                    </a>
                 </div>
                 {penduduk.length === 0 ? (
                     <div className="text-center text-gray-500">
