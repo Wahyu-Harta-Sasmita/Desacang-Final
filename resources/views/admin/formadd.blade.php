@@ -81,9 +81,8 @@
                 <label for="geolocation" class="block text-sm font-medium text-gray-700 mb-2">Koordinat
                     Geolocation</label>
                 <div id="map" class="w-full h-72 rounded mb-2"></div>
-                <input type="text" id="geolocation" name="geolocation" readonly
-                    class="w-full p-2 border border-gray-300 rounded focus:outline-none"
-                    placeholder="Klik pada peta untuk memilih lokasi">
+                <input type="text" id="geolocation" name="geolocation"
+                    class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
             <!-- Gaji -->
@@ -180,19 +179,25 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                // Koordinat default atau yang diinput sebelumnya
+                var initialCoordinates = document.getElementById('geolocation').value;
+                var latLng = initialCoordinates
+                    ? initialCoordinates.split(',').map(Number)
+                    : [-8.65, 115.22]; // Default koordinat
+
                 // Inisialisasi Map
-                var map = L.map('map').setView([-8.65, 115.22], 13); // Sesuaikan dengan koordinat default Anda
+                var map = L.map('map').setView(latLng, 13);
 
                 // Tambahkan Layer Tile ke Map
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-                // Tambahkan Marker Default
-                var marker = L.marker([-8.65, 115.22], { draggable: true }).addTo(map);
+                // Tambahkan Marker yang dapat dipindahkan
+                var marker = L.marker(latLng, { draggable: true }).addTo(map);
 
                 // Update Input Geolocation saat marker dipindahkan
-                marker.on('dragend', function (event) {
+                marker.on('dragend', function () {
                     var position = marker.getLatLng();
                     document.getElementById('geolocation').value = `${position.lat}, ${position.lng}`;
                 });
@@ -201,21 +206,43 @@
                 map.on('click', function (e) {
                     var lat = e.latlng.lat;
                     var lng = e.latlng.lng;
-                    marker.setLatLng([lat, lng]);
-                    document.getElementById('geolocation').value = `${lat}, ${lng}`;
+                    marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi yang diklik
+                    document.getElementById('geolocation').value = `${lat}, ${lng}`; // Perbarui input
+                });
+
+                // Update Marker dan Map saat input geolocation diubah
+                document.getElementById('geolocation').addEventListener('change', function () {
+                    var inputValue = this.value;
+                    var coordinates = inputValue.split(',').map(Number);
+
+                    // Validasi koordinat
+                    if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
+                        var lat = coordinates[0];
+                        var lng = coordinates[1];
+                        marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi baru
+                        map.setView([lat, lng], 13); // Perbarui tampilan peta
+                    } else {
+                        alert("Koordinat tidak valid. Harap masukkan dalam format: latitude, longitude");
+                    }
                 });
             });
 
             // SweetAlert Simpan Data
             document.getElementById('simpan').addEventListener('click', function () {
                 Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Data berhasil disimpan!",
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'Apakah Anda yakin?',
+                    text: "Data akan disimpan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, simpan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('submit').submit();
+                    }
                 });
-                document.getElementById('submit').submit();
             });
         </script>
     @endpush

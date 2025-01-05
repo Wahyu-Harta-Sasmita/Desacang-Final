@@ -69,10 +69,9 @@
                 <label for="geolocation" class="block text-sm font-medium text-gray-700 mb-2">Koordinat
                     Geolocation</label>
                 <div id="map" class="w-full h-72 rounded mb-2"></div>
-                <input type="text" id="geolocation" name="geolocation" readonly
+                <input type="text" id="geolocation" name="geolocation"
                     value="{{ old('geolocation', $penduduk->geolocation) }}"
-                    class="w-full p-2 border border-gray-300 rounded focus:outline-none"
-                    placeholder="Klik pada peta untuk memilih lokasi">
+                    class="w-full p-2 border border-gray-300 rounded focus:outline-none">
             </div>
 
             <!-- Gaji -->
@@ -157,11 +156,11 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Koordinat awal dari database atau nilai default
+                // Koordinat awal dari database atau default
                 var initialCoordinates = document.getElementById('geolocation').value;
                 var latLng = initialCoordinates
                     ? initialCoordinates.split(',').map(Number)
-                    : [-8.65, 115.22]; // Koordinat default
+                    : [-8.65, 115.22]; // Default koordinat
 
                 // Inisialisasi Map
                 var map = L.map('map').setView(latLng, 13);
@@ -186,6 +185,22 @@
                     var lng = e.latlng.lng;
                     marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi yang diklik
                     document.getElementById('geolocation').value = `${lat}, ${lng}`; // Perbarui input
+                });
+
+                // Update Marker dan Map saat input geolocation diubah
+                document.getElementById('geolocation').addEventListener('change', function () {
+                    var inputValue = this.value;
+                    var coordinates = inputValue.split(',').map(Number);
+
+                    // Validasi koordinat
+                    if (coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
+                        var lat = coordinates[0];
+                        var lng = coordinates[1];
+                        marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi baru
+                        map.setView([lat, lng], 13); // Perbarui tampilan peta
+                    } else {
+                        alert("Koordinat tidak valid. Harap masukkan dalam format: latitude, longitude");
+                    }
                 });
             });
 
