@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     // ADMIN
     Route::get('/admin', [OperatorController::class, 'dashboard'])->name('admin');
-    Route::get('/', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard  ', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/datapenduduk', [OperatorController::class, 'datapenduduk'])->name('datapenduduk');
     Route::delete('/datapenduduk/{id}', [OperatorController::class, 'destroy'])->name('datapenduduk.destroy');
     Route::get('/datapenduduk/{id}/edit', [OperatorController::class, 'edit'])->name('datapenduduk.edit');
