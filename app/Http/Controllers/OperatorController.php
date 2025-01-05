@@ -1,15 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Article;
 use App\Models\Penduduk;
 use App\Models\Bantuan;
+use App\Models\User;
 use App\Models\Validasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Inertia\Inertia;
 
 class OperatorController extends Controller
 {
     public function dashboard()
     {
+        $user = User::find(FacadesAuth::id());
+        $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
+
         $tervalidasi = Validasi::where('status', 'tervalidasi')->get();
         $totalbelumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
         $belumValidasi = Validasi::where('status', 'belum tervalidasi')->get();
@@ -21,7 +29,16 @@ class OperatorController extends Controller
         ];
 
         $totalPenduduk = Penduduk::count();
-        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi'));
+
+        $articles = Article::latest()->take(6)->get();
+        if ($user->level=='user') {
+        return Inertia::render('Home', [
+            'articles' => $articles
+        ]);
+        } else {
+            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
+        }
+        
     }
 
     public function datapenduduk()

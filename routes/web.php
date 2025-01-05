@@ -18,6 +18,7 @@ Route::get('/', function () {
     ]);
 });
 
+// USER
 Route::get('/home', [UserController::class, 'index'])->name('index');
 Route::get('/article', [UserController::class, 'article']);
 Route::get('/article/{id}', [UserController::class, 'articleDetail']);
@@ -27,14 +28,14 @@ Route::get('/user/formadd', [UserController::class, 'create']) -> name('useradd.
 Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
 Route::get('/profiles/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/profiles/{id}', [UserController::class, 'update'])->name('user.update');
-
+// USER END
 
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// USER
+
 Route::middleware('guest')->group(function () {
 
 });
@@ -45,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/admin', [OperatorController::class, 'dashboard']) -> name('admin');
+Route::get('/admin', [OperatorController::class, 'dashboard']) -> name('admin');
 Route::get('/', [OperatorController::class, 'dashboard']) -> name('admin.dashboard');
 Route::get('/datapenduduk', [OperatorController::class, 'datapenduduk']) -> name('datapenduduk');
 Route::delete('/datapenduduk/{id}', [OperatorController::class, 'destroy'])->name('datapenduduk.destroy');
@@ -68,6 +69,7 @@ Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('arti
 Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
 });
+// Admin End
 
 
 require __DIR__.'/auth.php';

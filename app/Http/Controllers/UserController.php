@@ -5,18 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Bantuan;
 use App\Models\Penduduk;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $articles = Article::latest()->take(6)->get();
 
+        $user = User::find(Auth::id());
+        $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
+
+        $articles = Article::latest()->take(6)->get();
+        if ($user->level=='user') {
         return Inertia::render('Home', [
             'articles' => $articles
         ]);
+        } else {
+            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
+        }
     }
 
     public function article()
