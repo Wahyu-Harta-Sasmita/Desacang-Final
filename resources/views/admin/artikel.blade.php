@@ -25,11 +25,11 @@
                         <tr>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->judul }}</td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <img src="{{ asset('assets/uploads/article_cover/' . $artikel->articles_cover) }}"
-                                    alt="Cover Artikel" class="w-full h-56 rounded-lg object-cover shadow">
+                                <img src="{{ asset('assets/uploads/article_cover/'.$artikel->cover_article) }}"
+                                    alt="Cover Artikel" class="w-20 h-20 rounded-lg object-cover shadow">
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                <a href="{{ asset('assets/uploads/article/' . $artikel->article) }}" target="_blank"
+                                <a href="{{ asset($artikel->path_article . $artikel->article) }}" target="_blank"
                                     class="text-blue-600 hover:underline">Lihat File</a>
                             </td>
                             <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $artikel->deskripsi }}</td>
