@@ -4,7 +4,6 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,7 +44,7 @@ Route::middleware('auth')->group(function () {
 
     // ADMIN
     Route::get('/admin', [OperatorController::class, 'dashboard'])->name('admin');
-    Route::get('/dashboard  ', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/datapenduduk', [OperatorController::class, 'datapenduduk'])->name('datapenduduk');
     Route::delete('/datapenduduk/{id}', [OperatorController::class, 'destroy'])->name('datapenduduk.destroy');
     Route::get('/datapenduduk/{id}/edit', [OperatorController::class, 'edit'])->name('datapenduduk.edit');
