@@ -85,7 +85,13 @@
                             class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
                         <a href="{{route('pengaturan')}}"
                             class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Pengaturan</a>
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Keluar</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
+                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
                     </div>
                 </div>
             </header>
@@ -98,5 +104,6 @@
         </div>
     </div>
     <script src="{{asset('assets/js/admin.js')}}"></script>
-</body> 
+</body>
+
 </html>

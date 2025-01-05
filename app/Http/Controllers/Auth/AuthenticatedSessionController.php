@@ -37,18 +37,19 @@ class AuthenticatedSessionController extends Controller
     if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
         $request->session()->regenerate();
 
-        // Redirect based on user level
-        if (Auth::user()->level === 'admin') {
-            return redirect()->intended('/admin'); // Admin dashboard
+        // Redirect berdasarkan level user
+        if (Auth::user()->level == 'admin') {
+            return redirect()->intended(route('admin'));
+        } elseif (Auth::user()->level == 'user') {
+            return redirect()->intended(route('index'));
         }
-
-        return redirect()->intended('/home'); // User dashboard
     }
 
     return back()->withErrors([
         'email' => 'The provided credentials do not match our records.',
     ]);
 }
+
 
 
     /**

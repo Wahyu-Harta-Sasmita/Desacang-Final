@@ -5,16 +5,14 @@ const NavBar = () => {
     return (
         <nav className="bg-gray-800 shadow-md py-4 text-white">
             <div className="container mx-auto flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <Link href="/home">
-                        <img
-                            src="/assets/images/DESACANG.png"
-                            alt="logo"
-                            className="h-8 w-8 object-contain"
-                        />
-                    </Link>
+                <Link href="/home" className="flex items-center gap-3">
+                    <img
+                        src="/assets/images/DESACANG.png"
+                        alt="logo"
+                        className="h-8 w-8 object-contain"
+                    />
                     <h1 className="text-xl font-bold">DESACANG</h1>
-                </div>
+                </Link>
 
                 <div className="flex items-center gap-6">
                     <Link
