@@ -77,10 +77,13 @@
             </div>
 
             <!-- Geolocation -->
-            <div>
-                <label for="geolocation" class="block text-sm font-medium text-gray-700">Koordinat Geolocation</label>
-                <input type="text" id="geolocation" name="geolocation"
-                    class="w-full p-2 border border-gray-300 rounded focus:outline-none">
+            <div class="col-span-2">
+                <label for="geolocation" class="block text-sm font-medium text-gray-700 mb-2">Koordinat
+                    Geolocation</label>
+                <div id="map" class="w-full h-72 rounded mb-2"></div>
+                <input type="text" id="geolocation" name="geolocation" readonly
+                    class="w-full p-2 border border-gray-300 rounded focus:outline-none"
+                    placeholder="Klik pada peta untuk memilih lokasi">
             </div>
 
             <!-- Gaji -->
@@ -172,16 +175,47 @@
     </div>
 
     @push('scripts')
+        <!-- Include Leaflet.js -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Inisialisasi Map
+                var map = L.map('map').setView([-8.65, 115.22], 13); // Sesuaikan dengan koordinat default Anda
+
+                // Tambahkan Layer Tile ke Map
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Tambahkan Marker Default
+                var marker = L.marker([-8.65, 115.22], { draggable: true }).addTo(map);
+
+                // Update Input Geolocation saat marker dipindahkan
+                marker.on('dragend', function (event) {
+                    var position = marker.getLatLng();
+                    document.getElementById('geolocation').value = `${position.lat}, ${position.lng}`;
+                });
+
+                // Update Marker dan Input saat peta diklik
+                map.on('click', function (e) {
+                    var lat = e.latlng.lat;
+                    var lng = e.latlng.lng;
+                    marker.setLatLng([lat, lng]);
+                    document.getElementById('geolocation').value = `${lat}, ${lng}`;
+                });
+            });
+
+            // SweetAlert Simpan Data
             document.getElementById('simpan').addEventListener('click', function () {
                 Swal.fire({
-                    position: "center", // SweetAlert ditampilkan di tengah
+                    position: "center",
                     icon: "success",
-                    title: "Your work has been saved",
+                    title: "Data berhasil disimpan!",
                     showConfirmButton: false,
                     timer: 1500
                 });
-                    document.getElementById('submit').submit();
+                document.getElementById('submit').submit();
             });
         </script>
     @endpush

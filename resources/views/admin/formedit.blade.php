@@ -65,11 +65,14 @@
             </div>
 
             <!-- Geolocation -->
-            <div>
-                <label for="geolocation" class="block text-sm font-medium text-gray-700">Koordinat Geolocation</label>
-                <input type="text" id="geolocation" name="geolocation"
+            <div class="col-span-2">
+                <label for="geolocation" class="block text-sm font-medium text-gray-700 mb-2">Koordinat
+                    Geolocation</label>
+                <div id="map" class="w-full h-72 rounded mb-2"></div>
+                <input type="text" id="geolocation" name="geolocation" readonly
                     value="{{ old('geolocation', $penduduk->geolocation) }}"
-                    class="w-full p-2 border border-gray-300 rounded focus:outline-none">
+                    class="w-full p-2 border border-gray-300 rounded focus:outline-none"
+                    placeholder="Klik pada peta untuk memilih lokasi">
             </div>
 
             <!-- Gaji -->
@@ -149,11 +152,48 @@
     </div>
 
     @push('scripts')
+        <!-- Include Leaflet.js -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Koordinat awal dari database atau nilai default
+                var initialCoordinates = document.getElementById('geolocation').value;
+                var latLng = initialCoordinates
+                    ? initialCoordinates.split(',').map(Number)
+                    : [-8.65, 115.22]; // Koordinat default
+
+                // Inisialisasi Map
+                var map = L.map('map').setView(latLng, 13);
+
+                // Tambahkan Tile Layer ke Map
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Tambahkan Marker yang dapat dipindahkan
+                var marker = L.marker(latLng, { draggable: true }).addTo(map);
+
+                // Update Input Geolocation saat marker dipindahkan
+                marker.on('dragend', function () {
+                    var position = marker.getLatLng();
+                    document.getElementById('geolocation').value = `${position.lat}, ${position.lng}`;
+                });
+
+                // Update Marker dan Input saat peta diklik
+                map.on('click', function (e) {
+                    var lat = e.latlng.lat;
+                    var lng = e.latlng.lng;
+                    marker.setLatLng([lat, lng]); // Pindahkan marker ke lokasi yang diklik
+                    document.getElementById('geolocation').value = `${lat}, ${lng}`; // Perbarui input
+                });
+            });
+
+            // SweetAlert untuk konfirmasi simpan
             document.getElementById('simpan').addEventListener('click', function () {
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
-                    text: "Data keluarga akan diperbarui!",
+                    text: "Perubahan data akan disimpan!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -162,7 +202,6 @@
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Kirim form hanya jika tombol "Ya, hapus!" ditekan
                         document.getElementById('submit').submit();
                     }
                 });
