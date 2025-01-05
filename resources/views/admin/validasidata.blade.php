@@ -95,20 +95,18 @@
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->desa }}</td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->banjar }}</td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset('assets/uploads/rumah'. $penduduk->rumah) }}" download
-                                                class="text-blue-600 hover:underline">Unduh Dokumen</a>
+                                            <a href="{{ asset('assets/uploads/rumah/'. $penduduk->rumah) }}" target="_blank"
+                                                class="text-blue-600 hover:underline">Lihat File</a>
                                         </td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset('assets/uploads/kk'. $penduduk->kk) }}" download
-                                                class="text-blue-600 hover:underline">Unduh Dokumen</a>
+                                            <a href="{{ asset('assets/uploads/kk/'. $penduduk->kk) }}" target="_blank"
+                                                class="text-blue-600 hover:underline">Lihat File</a>
                                         </td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                             @if ($penduduk->validasi?->status === 'validated')
                                                 <span class="text-green-600">Selesai</span>
                                             @else
-                                                <form method="POST" action="{{ route('validate', ['user_id' => $penduduk->user_id]) }}">
-                                                    @csrf
-                                                    @method('PATCH')
+                                                <form action="{{ route('validasicomingsoon') }}">
                                                     <button type="submit" class="text-blue-600 hover:underline">Validasi</button>
                                                 </form>
                                             @endif

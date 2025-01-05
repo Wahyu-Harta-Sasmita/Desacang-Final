@@ -87,6 +87,12 @@ class OperatorController extends Controller
     }
 
 
+    public function validasicomingsoon()
+    {
+        return view('admin.validasicomingsoon');
+    }
+
+
     public function artikel()
     {
         return view('admin.artikel');

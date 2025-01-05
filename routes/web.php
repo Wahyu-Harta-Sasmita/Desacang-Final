@@ -53,6 +53,7 @@ Route::get('/formadd', [OperatorController::class, 'create']) -> name('formadd')
 Route::get('/formadd/create', [OperatorController::class, 'create']) -> name('formadd.create');
 Route::post('/formadd', [OperatorController::class, 'store'])->name('formadd.store');
 Route::get('/validasidata', [OperatorController::class, 'validasidata']) -> name('validasidata');
+Route::get('/validasicomingsoon', [OperatorController::class, 'validasicomingsoon']) -> name('validasicomingsoon');
 Route::get('/profile', [OperatorController::class, 'profile']) -> name('profile');
 Route::get('/setting', [OperatorController::class, 'pengaturan']) -> name('pengaturan');
 Route::get('/detailpenduduk/{id}', [OperatorController::class, 'detailpenduduk'])->name('detailpenduduk');
@@ -60,7 +61,7 @@ Route::get('/datapenduduk', [OperatorController::class, 'search'])->name('datape
 Route::patch('/validasidata/{user_id}/validate', [OperatorController::class, 'validate'])->name('validate');
 Route::get('/addartikel', [OperatorController::class, 'addartikel'])->name('addartikel');
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel');
-Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.add');
+Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.add');
 Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
 Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
