@@ -24,12 +24,12 @@ const NavBar = () => {
                         Article
                     </Link>
 
-                    <Link
+                    <a
                         href="/user/formadd"
                         className=" hover:bg-gray-400 hover:text-black rounded-md py-2 px-4 transition duration-200 font-medium"
                     >
                         Tambah Data
-                    </Link>
+                    </a>
 
                     <Link href="/notifikasi" className="relative">
                         <img

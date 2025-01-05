@@ -19,7 +19,7 @@
 
     <!-- Form Tambah Data -->
     <div class="bg-white p-6 rounded shadow mb-6">
-        <h2 class="text-lg font-semibold mb-4 text-gray-700">Form Tambah Data Penduduk</h2>
+        <h2 class="text-lg font-semibold mb-4 text-center text-gray-700">Form Tambah Data Penduduk</h2>
         <form id="submit" action="{{ route('useradd.store') }}" method="POST" enctype="multipart/form-data"
             class="grid grid-cols-2 gap-6">
             @csrf

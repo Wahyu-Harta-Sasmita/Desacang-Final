@@ -10,9 +10,6 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $articles = Article::latest()->take(6)->get();
@@ -56,23 +53,15 @@ class UserController extends Controller
         ]);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $bantuans = Bantuan::all();
         return view('pages.addForm', compact('bantuans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
-            // Validasi input
             $validated = $request->validate([
                 'nama' => 'required|string|max:50',
                 'nik' => 'required|string|size:16|unique:penduduks,nik',
@@ -92,7 +81,6 @@ class UserController extends Controller
                 'jenis_bantuan' => 'required|string|max:50',
             ]);
 
-            // Upload file jika ada, menggunakan move
             $pathRumah = $request->file('rumah')
                 ? $request->file('rumah')->move(public_path('assets/uploads/rumah'), time() . '_' . $request->file('rumah')->getClientOriginalName())
                 : null;
@@ -100,15 +88,12 @@ class UserController extends Controller
             $pathKK = $request->file('kk')
                 ? $request->file('kk')->move(public_path('assets/uploads/kk'), time() . '_' . $request->file('kk')->getClientOriginalName())
                 : null;
-
-            // Simpan data ke tabel bantuans
             $bantuan = Bantuan::create([
                 'jenis_bantuan' => $validated['jenis_bantuan'],
             ]);
 
-            // Simpan data ke tabel penduduks
             $penduduk = Penduduk::create([
-                'user_id' => auth()->id() ?? null, // Jika tidak login, user_id diset null
+                'user_id' => auth()->id() ?? null, 
                 'nama' => $validated['nama'],
                 'nik' => $validated['nik'],
                 'no_kk' => $validated['no_kk'],
@@ -129,7 +114,6 @@ class UserController extends Controller
                 'bantuan_id' => $bantuan->id_bantuan,
             ]);
 
-            // Redirect dengan pesan sukses
             return redirect()->route('profiles')->with('success', 'Data berhasil disimpan ke semua tabel.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
