@@ -22,61 +22,62 @@
     </div>
 
     <!-- Data Penduduk Tervalidasi -->
-    <!-- Data Penduduk Tervalidasi -->
-<div class="bg-white p-6 rounded shadow mb-6">
-    <h2 class="text-lg font-semibold mb-4 text-gray-700">Riwayat Data Penduduk Tervalidasi</h2>
-    <div class="overflow-x-auto">
-        <table class="w-full table-fixed border-collapse border border-gray-200">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Nama</th>
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Kategori</th>
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tervalidasi as $item)
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
-                        <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
+    <div class="bg-white p-6 rounded shadow mb-6">
+        <h2 class="text-lg font-semibold mb-4 text-gray-700">Riwayat Data Penduduk Tervalidasi</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-fixed border-collapse border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Nama</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Kategori</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Status</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($tervalidasi as $item)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-green-600">Tervalidasi</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="text-right mt-2">
+            <a href="{{ route('validasidata', ['validated' => 1]) }}"
+                class="text-blue-500 hover:underline cursor-pointer">Selengkapnya</a>
+        </div>
     </div>
-    <div class="text-right mt-2">
-        <p class="text-blue-500 hover:underline cursor-pointer">Selengkapnya</p>
-    </div>
-</div>
 
-<!-- Data Penduduk Belum Tervalidasi -->
-<div class="bg-white p-6 rounded shadow mb-6">
-    <h2 class="text-lg font-semibold mb-4 text-gray-700">Permintaan Validasi Terbaru</h2>
-    <div class="overflow-x-auto">
-        <table class="w-full table-fixed border-collapse border border-gray-200">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Nama</th>
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Kategori</th>
-                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($belumValidasi as $item)
-                    <tr>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
-                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
-                        <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
+    <!-- Data Penduduk Belum Tervalidasi -->
+    <div class="bg-white p-6 rounded shadow mb-6">
+        <h2 class="text-lg font-semibold mb-4 text-gray-700">Permintaan Validasi Terbaru</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-fixed border-collapse border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Nama</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Kategori</th>
+                        <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700 w-1/3">Status</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($belumValidasi as $item)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->nama }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $item->kategori }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-yellow-600">Belum Tervalidasi</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="text-right mt-2">
+            <a href="{{ route('validasidata', ['validated' => 0]) }}"
+                class="text-blue-500 hover:underline cursor-pointer">Selengkapnya</a>
+        </div>
     </div>
-    <div class="text-right mt-2">
-        <p class="text-blue-500 hover:underline cursor-pointer">Selengkapnya</p>
-    </div>
-</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
