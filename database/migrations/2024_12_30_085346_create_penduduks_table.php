@@ -29,6 +29,9 @@ return new class extends Migration
             $table->string('kk', 255);
             $table->foreignId('bantuan_id')->constrained('bantuans', 'id_bantuan')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('status_validasi', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('judul', 255)->default('Pemberitahuan Validasi');
+            $table->string('pesan')->default('tidak ada pesan');
+            $table->string('tipe', 10)-> default('validasi');
             $table->timestamps();
         });        
     }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Bantuan;
-use App\Models\Notifikasi;
 use App\Models\Penduduk;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,20 +12,31 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    
+
     public function index()
     {
-
         $user = User::find(Auth::id());
         $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
 
+        $tervalidasi = Penduduk::where('status_validasi', 'approved')->get();
+        $totalbelumValidasi = Penduduk::where('status_validasi', 'pending')->count();
+        $belumValidasi = Penduduk::where('status_validasi', 'pending')->get();
+
+        $kategoriPenduduk = [
+            'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
+            'Krama Tamiu' => Penduduk::where('kategori', 'Krama Tamiu')->count(),
+            'Tamiu' => Penduduk::where('kategori', 'Tamiu')->count(),
+        ];
+
+        $totalPenduduk = Penduduk::count();
+
         $articles = Article::latest()->take(6)->get();
-        if ($user->level=='user') {
-        return Inertia::render('Home', [
-            'articles' => $articles
-        ]);
+        if ($user->level == 'user') {
+            return Inertia::render('Home', [
+                'articles' => $articles
+            ]);
         } else {
-            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
+            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi'));
         }
     }
 
@@ -48,9 +58,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function notifikasi()
+    public function notifikasi($id_penduduk)
     {
-        return inertia('Notification');
+        // Ambil notifikasi yang sesuai dengan id_penduduk
+        $notifications = Penduduk::where('id_penduduk', $id_penduduk)->get();
+
+        return Inertia::render('Notification', [
+            'notifications' => $notifications,
+        ]);
     }
 
     public function profiles()
@@ -64,15 +79,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function getNotifications($pendudukId)
-    {
-        // Ambil semua notifikasi untuk penduduk dengan ID yang diberikan
-        $notifications = Notifikasi::where('penduduk_id', $pendudukId)->get();
-
-        // Kembalikan respons dengan data notifikasi
-        return response()->json($notifications);
-    }
-
     public function create()
     {
         $bantuans = Bantuan::all();
@@ -80,71 +86,71 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-{
-    try {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:50',
-            'nik' => 'required|string|size:16|unique:penduduks,nik',
-            'no_kk' => 'required|string|size:16',
-            'kepala_keluarga' => 'nullable|string|max:50',
-            'jumlah_keluarga' => 'required|integer|min:1',
-            'pekerjaan' => 'nullable|string|max:50',
-            'gaji' => 'nullable|integer|min:0',
-            'alamat' => 'nullable|string|max:255',
-            'desa' => 'nullable|string|max:50',
-            'banjar' => 'nullable|string|max:50',
-            'no_rumah' => 'nullable|string|max:50',
-            'kategori' => 'nullable|string|max:50',
-            'geolocation' => 'nullable|string|max:255',
-            'rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'jenis_bantuan' => 'required|string|max:50',
-        ]);
+    {
+        try {
+            $validated = $request->validate([
+                'nama' => 'required|string|max:50',
+                'nik' => 'required|string|size:16|unique:penduduks,nik',
+                'no_kk' => 'required|string|size:16',
+                'kepala_keluarga' => 'nullable|string|max:50',
+                'jumlah_keluarga' => 'required|integer|min:1',
+                'pekerjaan' => 'nullable|string|max:50',
+                'gaji' => 'nullable|integer|min:0',
+                'alamat' => 'nullable|string|max:255',
+                'desa' => 'nullable|string|max:50',
+                'banjar' => 'nullable|string|max:50',
+                'no_rumah' => 'nullable|string|max:50',
+                'kategori' => 'nullable|string|max:50',
+                'geolocation' => 'nullable|string|max:255',
+                'rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'jenis_bantuan' => 'required|string|max:50',
+            ]);
 
-        // Upload files if available
-        $pathRumah = $request->file('rumah')
-            ? $request->file('rumah')->move(public_path('assets/uploads/rumah'), time() . '_' . $request->file('rumah')->getClientOriginalName())
-            : null;
+            // Upload files if available
+            $pathRumah = $request->file('rumah')
+                ? $request->file('rumah')->move(public_path('assets/uploads/rumah'), time() . '_' . $request->file('rumah')->getClientOriginalName())
+                : null;
 
-        $pathKK = $request->file('kk')
-            ? $request->file('kk')->move(public_path('assets/uploads/kk'), time() . '_' . $request->file('kk')->getClientOriginalName())
-            : null;
+            $pathKK = $request->file('kk')
+                ? $request->file('kk')->move(public_path('assets/uploads/kk'), time() . '_' . $request->file('kk')->getClientOriginalName())
+                : null;
 
-        // Create the data with pending status
-        $bantuan = Bantuan::create([
-            'jenis_bantuan' => $validated['jenis_bantuan'],
-        ]);
+            // Create the data with pending status
+            $bantuan = Bantuan::create([
+                'jenis_bantuan' => $validated['jenis_bantuan'],
+            ]);
 
-        $penduduk = Penduduk::create([
-            'user_id' => auth()->id() ?? null,
-            'nama' => $validated['nama'],
-            'nik' => $validated['nik'],
-            'no_kk' => $validated['no_kk'],
-            'kepala_keluarga' => $validated['kepala_keluarga'] ?? null,
-            'jumlah_keluarga' => $validated['jumlah_keluarga'],
-            'pekerjaan' => $validated['pekerjaan'] ?? null,
-            'gaji' => $validated['gaji'] ?? 0,
-            'alamat' => $validated['alamat'] ?? null,
-            'desa' => $validated['desa'] ?? null,
-            'banjar' => $validated['banjar'] ?? null,
-            'no_rumah' => $validated['no_rumah'] ?? null,
-            'kategori' => $validated['kategori'] ?? null,
-            'geolocation' => $validated['geolocation'] ?? null,
-            'path_rumah' => $pathRumah,
-            'rumah' => $pathRumah ? basename($pathRumah) : null,
-            'path_kk' => $pathKK,
-            'kk' => $pathKK ? basename($pathKK) : null,
-            'bantuan_id' => $bantuan->id_bantuan,
-            'status_validasi' => 'pending', // Status is set to pending
-        ]);
+            $penduduk = Penduduk::create([
+                'user_id' => auth()->id() ?? null,
+                'nama' => $validated['nama'],
+                'nik' => $validated['nik'],
+                'no_kk' => $validated['no_kk'],
+                'kepala_keluarga' => $validated['kepala_keluarga'] ?? null,
+                'jumlah_keluarga' => $validated['jumlah_keluarga'],
+                'pekerjaan' => $validated['pekerjaan'] ?? null,
+                'gaji' => $validated['gaji'] ?? 0,
+                'alamat' => $validated['alamat'] ?? null,
+                'desa' => $validated['desa'] ?? null,
+                'banjar' => $validated['banjar'] ?? null,
+                'no_rumah' => $validated['no_rumah'] ?? null,
+                'kategori' => $validated['kategori'] ?? null,
+                'geolocation' => $validated['geolocation'] ?? null,
+                'path_rumah' => $pathRumah,
+                'rumah' => $pathRumah ? basename($pathRumah) : null,
+                'path_kk' => $pathKK,
+                'kk' => $pathKK ? basename($pathKK) : null,
+                'bantuan_id' => $bantuan->id_bantuan,
+                'status_validasi' => 'pending',
+            ]);
 
-        return redirect()->route('profiles')->with('success', 'Data berhasil diajukan untuk validasi admin.');
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return redirect()->back()->withErrors($e->errors())->withInput();
-    } catch (\Exception $e) {
-        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()]);
+            return redirect()->route('profiles')->with('success', 'Data berhasil diajukan untuk validasi admin.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()]);
+        }
     }
-}
 
 
     /**

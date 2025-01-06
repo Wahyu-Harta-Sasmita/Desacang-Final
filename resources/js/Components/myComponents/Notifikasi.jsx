@@ -1,39 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { usePage } from "@inertiajs/react";
 
-function NotificationComponent({ pendudukId }) {
-    const [notifications, setNotifications] = useState([]);
+function Notification() {
+  const { notifications } = usePage().props;
 
-    useEffect(() => {
-        const fetchNotifications = async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/api/notifications/${pendudukId}`
-                );
-                setNotifications(response.data);
-            } catch (error) {
-                console.error("Error fetching notifications:", error);
-            }
-        };
-
-        fetchNotifications();
-    }, [pendudukId]);
-
-    return (
-      <div className="h-[70vh]">
-      <div className="border-b p-6 rounded-md w-full h-[100px]">
-        <div className="flex justify-between items-center">
-          <div className="flex">
-            <h3 className="font-bold text-lg">atribut judul</h3>
-            <span className="text-sm text-gray-600">atribut tipe</span>
-            <span className="text-sm text-gray-600">atribut waktu</span>
+  return (
+    <div>
+      {notifications.length === 0 ? (
+        <div>No notifications available.</div>
+      ) : (
+        notifications.map((notification) => (
+          <div key={notification.id} className="h-[70vh]">
+            <div className="border-b-2 border-grey-800 p-6 rounded-md w-full h-[100px]">
+              <div className="flex justify-between w-full items-center">
+                <h3 className="font-bold text-lg">{notification.judul}</h3>
+                <p className="text-md">Tipe: {notification.tipe}</p>
+              </div>
+              <div className="flex justify-between w-full">
+                <p className="mt-2 w-[80%]">{notification.pesan}</p>
+                <p className="text-sm">
+                  {new Date(notification.created_at).toLocaleDateString("en-GB")}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-        <p className="mt-2 text-gray-700">atribut pesan</p>
-      </div>
+        ))
+      )}
     </div>
-    
-    );
+  );
 }
 
-export default NotificationComponent;
+export default Notification;

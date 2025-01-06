@@ -19,7 +19,7 @@ class OperatorController extends Controller
         $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
 
         $tervalidasi = Penduduk::where('status_validasi', 'approved')->get();
-        $totalbelumValidasi = Penduduk::where('status_validasi', 'pending')->count();  // Perbaikan di sini
+        $totalbelumValidasi = Penduduk::where('status_validasi', 'pending')->count();
         $belumValidasi = Penduduk::where('status_validasi', 'pending')->get();
 
         $kategoriPenduduk = [
@@ -50,64 +50,41 @@ class OperatorController extends Controller
 
     public function validasidata(Request $request)
     {
-        // Query dasar untuk model Penduduk
         $query = Penduduk::query();
 
-        // Filter berdasarkan status validasi
         if ($request->filled('validated')) {
             if ($request->validated == 1) {
-                // Data yang tervalidasi
                 $query->where('status_validasi', 'approved');
             } elseif ($request->validated == 0) {
-                // Data yang belum tervalidasi
                 $query->where('status_validasi', 'pending');
             }
         }
 
-        // Ambil data dengan paginasi (10 data per halaman)
         $validasi = $query->paginate(10)->appends($request->all());
 
-        // Return ke view dengan data penduduk
         return view('admin.validasidata', compact('validasi'));
     }
 
 
     public function validateData($id)
-{
-    // Temukan data penduduk berdasarkan ID
-    $penduduk = Penduduk::findOrFail($id);
+    {
+        $penduduk = Penduduk::findOrFail($id);
 
-    // Ubah status validasi menjadi approved
-    $penduduk->status_validasi = 'approved';
-    $penduduk->save();
+        $penduduk->status_validasi = 'approved';
+        $penduduk->pesan = 'Permohonan Validasi Disetujui!';
+        $penduduk->save();
 
-    // Simpan pesan ke tabel notifikasi
-    Notifikasi::create([
-        'penduduk_id' => $penduduk->id_penduduk, // gunakan id_penduduk sesuai migrasi
-        'pesan' => 'Validasi berhasil! Akun Anda telah terverifikasi.',
-    ]);
+        return redirect()->back()->with('success', 'Data berhasil divalidasi!');
+    }
 
-    // Redirect kembali ke halaman sebelumnya dengan pesan sukses
-    return redirect()->back()->with('success', 'Data berhasil divalidasi!');
-}
+    public function rejectData($id)
+    {
+        $penduduk = Penduduk::findOrFail($id);
+        $penduduk->pesan = 'Permohonan Validasi Ditolak!';
+        $penduduk->delete();
 
-public function rejectData($id)
-{
-    // Temukan data penduduk berdasarkan ID
-    $penduduk = Penduduk::findOrFail($id);
-
-    // Hapus data penduduk yang ditolak
-    $penduduk->delete();
-
-    // Simpan pesan ke tabel notifikasi
-    Notifikasi::create([
-        'penduduk_id' => $penduduk->id_penduduk, // gunakan id_penduduk sesuai migrasi
-        'pesan' => 'Validasi ditolak. Data Anda telah dihapus.',
-    ]);
-
-    // Redirect kembali ke halaman sebelumnya dengan pesan sukses
-    return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
-}
+        return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
+    }
 
     public function validasicomingsoon()
     {
@@ -138,17 +115,14 @@ public function rejectData($id)
 
     public function detailpenduduk($id)
     {
-        $penduduk = Penduduk::with('bantuan')->findOrFail($id); // Jika ada relasi bantuan
+        $penduduk = Penduduk::with('bantuan')->findOrFail($id);
         return view('admin.pendudukdetail', compact('penduduk'));
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -156,7 +130,7 @@ public function rejectData($id)
     public function create()
     {
         $bantuans = Bantuan::all();
-        return view('admin.formadd', compact('bantuans')); // Sesuaikan dengan lokasi file Blade Anda
+        return view('admin.formadd', compact('bantuans')); 
     }
 
     /**
@@ -201,7 +175,7 @@ public function rejectData($id)
 
             // Simpan data ke tabel penduduks
             $penduduk = Penduduk::create([
-                'user_id' => auth()->id() ?? null, // Jika tidak login, user_id diset null
+                'user_id' => auth()->id() ?? null,
                 'nama' => $validated['nama'],
                 'nik' => $validated['nik'],
                 'no_kk' => $validated['no_kk'],
@@ -220,7 +194,7 @@ public function rejectData($id)
                 'path_kk' => $pathKK,
                 'kk' => $pathKK ? basename($pathKK) : null,
                 'bantuan_id' => $bantuan->id_bantuan,
-                'status_validasi' => 'approved', // Status is set to pending
+                'status_validasi' => 'approved', 
             ]);
 
             // Redirect dengan pesan sukses

@@ -39,9 +39,9 @@ class AuthenticatedSessionController extends Controller
 
         // Redirect berdasarkan level user
         if (Auth::user()->level == 'admin') {
-            return redirect()->intended(route('/admin'));
+            return redirect()->intended(route('admin'));
         } elseif (Auth::user()->level == 'user') {
-            return redirect()->intended(route('/home'));
+            return redirect()->intended(route('index'));
         }
     }
 
