@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::middleware('guest')->group(function () {});
+Route::middleware('guest')->group(function () { });
 
 
 Route::middleware('auth')->group(function () {
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     // ADMIN
     Route::get('/admin', [OperatorController::class, 'dashboard'])->name('admin');
-    Route::get('/', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard', [OperatorController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/datapenduduk', [OperatorController::class, 'datapenduduk'])->name('datapenduduk');
     Route::delete('/datapenduduk/{id}', [OperatorController::class, 'destroy'])->name('datapenduduk.destroy');
     Route::get('/datapenduduk/{id}/edit', [OperatorController::class, 'edit'])->name('datapenduduk.edit');
@@ -68,7 +68,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
     Route::post('/validasi/{id}/validate', [OperatorController::class, 'validateData'])->name('validasi.validate');
 Route::post('/validasi/{id}/reject', [OperatorController::class, 'rejectData'])->name('validasi.reject');
-
     // Admin End
 });
 
