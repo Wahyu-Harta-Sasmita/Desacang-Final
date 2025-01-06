@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\Penduduk;
 use App\Models\Bantuan;
 use App\Models\User;
-use App\Models\Validasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Inertia\Inertia;
@@ -18,9 +17,9 @@ class OperatorController extends Controller
         $user = User::find(FacadesAuth::id());
         $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
 
-        $tervalidasi = Validasi::where('status', 'tervalidasi')->get();
-        $totalbelumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
-        $belumValidasi = Validasi::where('status', 'belum tervalidasi')->get();
+        $tervalidasi = Penduduk::where('status_validasi', 'approved')->get();
+        $totalbelumValidasi = Penduduk::where('status_validasi', 'pending')->count();  // Perbaikan di sini
+        $belumValidasi = Penduduk::where('status_validasi', 'pending')->get();
 
         $kategoriPenduduk = [
             'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
@@ -31,15 +30,15 @@ class OperatorController extends Controller
         $totalPenduduk = Penduduk::count();
 
         $articles = Article::latest()->take(6)->get();
-        if ($user->level=='user') {
-        return Inertia::render('Home', [
-            'articles' => $articles
-        ]);
+        if ($user->level == 'user') {
+            return Inertia::render('Home', [
+                'articles' => $articles
+            ]);
         } else {
-            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
+            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi'));
         }
-        
     }
+
 
     public function datapenduduk()
     {
@@ -50,57 +49,51 @@ class OperatorController extends Controller
 
     public function validasidata(Request $request)
     {
-        $query = Penduduk::with('bantuan');
-
-        // Filter berdasarkan nama
-        if ($request->filled('search')) {
-            $query->where('kepala_keluarga', 'like', '%' . $request->search . '%');
-        }
-
-        // Filter berdasarkan desa
-        if ($request->filled('desa_filter')) {
-            $query->where('desa', $request->desa_filter);
-        }
+        // Query dasar untuk model Penduduk
+        $query = Penduduk::query();
 
         // Filter berdasarkan status validasi
         if ($request->filled('validated')) {
             if ($request->validated == 1) {
-                $query->whereHas('validasi', function ($q) {
-                    $q->where('status', 'validated');
-                });
+                // Data yang tervalidasi
+                $query->where('status_validasi', 'approved');
             } elseif ($request->validated == 0) {
-                $query->whereDoesntHave('validasi');
+                // Data yang belum tervalidasi
+                $query->where('status_validasi', 'pending');
             }
         }
 
-        // Ambil hasil pencarian dengan paginasi
-        $validasi = $query->paginate(4)->appends($request->all());
+        // Ambil data dengan paginasi (10 data per halaman)
+        $validasi = $query->paginate(10)->appends($request->all());
 
-        // Return ke view
+        // Return ke view dengan data penduduk
         return view('admin.validasidata', compact('validasi'));
     }
 
 
-    public function validate(Request $request, $user_id)
+    public function validateData($id)
     {
-        $penduduk = Penduduk::where('user_id', $user_id)->first();
+        // Temukan data penduduk berdasarkan ID
+        $penduduk = Penduduk::findOrFail($id);
 
-        if (!$penduduk) {
-            return redirect()->back()->with('error', 'Data penduduk tidak ditemukan.');
-        }
+        // Ubah status validasi menjadi approved
+        $penduduk->status_validasi = 'approved';
+        $penduduk->save();
 
-        // Jika sudah divalidasi, tidak perlu memproses ulang
-        if ($penduduk->validasi?->status === 'validated') {
-            return redirect()->back()->with('info', 'Data sudah divalidasi.');
-        }
+        // Redirect kembali ke halaman sebelumnya
+        return redirect()->back()->with('success', 'Data berhasil divalidasi!');
+    }
 
-        // Lakukan validasi
-        $penduduk->validasi()->updateOrCreate(
-            ['id_penduduk' => $penduduk->id_penduduk],
-            ['status' => 'validated']
-        );
+    public function rejectData($id)
+    {
+        // Temukan data penduduk berdasarkan ID
+        $penduduk = Penduduk::findOrFail($id);
 
-        return redirect()->back()->with('success', 'Data berhasil divalidasi.');
+        // Hapus data penduduk yang ditolak
+        $penduduk->delete();
+
+        // Redirect kembali ke halaman sebelumnya
+        return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
     }
 
 
@@ -215,6 +208,7 @@ class OperatorController extends Controller
                 'path_kk' => $pathKK,
                 'kk' => $pathKK ? basename($pathKK) : null,
                 'bantuan_id' => $bantuan->id_bantuan,
+                'status_validasi' => 'approved', // Status is set to pending
             ]);
 
             // Redirect dengan pesan sukses
