@@ -12,7 +12,7 @@ const Article = () => {
             ) : (
                 articles.map((article) => (
                     <div key={article.id_article} className="p-4">
-                        <div className="bg-white rounded-lg shadow-md overflow-hidden w-[320px] h-[400px] flex flex-col">
+                        <div className="bg-gray-200 rounded-lg shadow-md overflow-hidden w-[320px] h-[400px] flex flex-col">
                             <img
                                 src={`/assets/uploads/article_cover/${article.cover_article}`}
                                 alt={article.judul}

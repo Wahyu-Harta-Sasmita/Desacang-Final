@@ -36,7 +36,7 @@ const About = () => {
 
             {/* Section Artikel */}
             <div>
-                <h2 className="font-bold text-2xl text-center py-10">
+                <h2 className="font-bold text-2xl text-center pt-10 pb-5">
                     Artikel Terbaru
                 </h2>
 
@@ -46,7 +46,7 @@ const About = () => {
                     ) : (
                         articles.map((article) => (
                             <div key={article.id_article} className="p-4 w-80">
-                                <div className="bg-white rounded-lg shadow-md overflow-hidden h-[420px] flex flex-col">
+                                <div className="bg-gray-200 rounded-lg shadow-md overflow-hidden h-[420px] flex flex-col">
                                     <img
                                         src={`/assets/uploads/article_cover/${article.cover_article}`}
                                         alt={article.judul}

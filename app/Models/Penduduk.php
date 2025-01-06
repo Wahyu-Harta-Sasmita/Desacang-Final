@@ -17,8 +17,4 @@ class Penduduk extends Model
         return $this->belongsTo(Bantuan::class, 'bantuan_id', 'id_bantuan');
     }
 
-    public function validasi()
-    {
-        return $this->belongsTo(Validasi::class, 'validasi_id', 'id_validasi');
-    }
 }

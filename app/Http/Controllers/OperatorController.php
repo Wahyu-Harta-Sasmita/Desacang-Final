@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\Penduduk;
 use App\Models\Bantuan;
 use App\Models\User;
-use App\Models\Validasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Inertia\Inertia;
@@ -14,32 +13,32 @@ use Inertia\Inertia;
 class OperatorController extends Controller
 {
     public function dashboard()
-    {
-        $user = User::find(FacadesAuth::id());
-        $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
+{
+    $user = User::find(FacadesAuth::id());
+    $penduduk = Penduduk::where('id_penduduk', $user->id)->first();
 
-        $tervalidasi = Validasi::where('status', 'tervalidasi')->get();
-        $totalbelumValidasi = Penduduk::where('validasi_id', 'belum_validasi')->count();
-        $belumValidasi = Validasi::where('status', 'belum tervalidasi')->get();
+    $tervalidasi = Penduduk::where('status_validasi', 'approved')->get();
+    $totalbelumValidasi = Penduduk::where('status_validasi', 'pending')->count();  // Perbaikan di sini
+    $belumValidasi = Penduduk::where('status_validasi', 'pending')->get();
 
-        $kategoriPenduduk = [
-            'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
-            'Krama Tamiu' => Penduduk::where('kategori', 'Krama Tamiu')->count(),
-            'Tamiu' => Penduduk::where('kategori', 'Tamiu')->count(),
-        ];
+    $kategoriPenduduk = [
+        'Krama Desa Adat' => Penduduk::where('kategori', 'Krama Desa Adat')->count(),
+        'Krama Tamiu' => Penduduk::where('kategori', 'Krama Tamiu')->count(),
+        'Tamiu' => Penduduk::where('kategori', 'Tamiu')->count(),
+    ];
 
-        $totalPenduduk = Penduduk::count();
+    $totalPenduduk = Penduduk::count();
 
-        $articles = Article::latest()->take(6)->get();
-        if ($user->level=='user') {
+    $articles = Article::latest()->take(6)->get();
+    if ($user->level == 'user') {
         return Inertia::render('Home', [
             'articles' => $articles
         ]);
-        } else {
-            return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
-        }
-        
+    } else {
+        return view('admin.dashboard', compact('totalPenduduk', 'kategoriPenduduk', 'totalbelumValidasi', 'belumValidasi', 'tervalidasi')); 
     }
+}
+
 
     public function datapenduduk()
     {
@@ -102,6 +101,32 @@ class OperatorController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil divalidasi.');
     }
+
+
+    public function validateData($id)
+{
+    // Temukan data penduduk berdasarkan ID
+    $penduduk = Penduduk::findOrFail($id);
+
+    // Ubah status validasi menjadi approved
+    $penduduk->status_validasi = 'approved';
+    $penduduk->save();
+
+    // Redirect kembali ke halaman sebelumnya
+    return redirect()->back()->with('success', 'Data berhasil divalidasi!');
+}
+
+public function rejectData($id)
+{
+    // Temukan data penduduk berdasarkan ID
+    $penduduk = Penduduk::findOrFail($id);
+
+    // Hapus data penduduk yang ditolak
+    $penduduk->delete();
+
+    // Redirect kembali ke halaman sebelumnya
+    return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
+}
 
 
     public function validasicomingsoon()
@@ -215,6 +240,7 @@ class OperatorController extends Controller
                 'path_kk' => $pathKK,
                 'kk' => $pathKK ? basename($pathKK) : null,
                 'bantuan_id' => $bantuan->id_bantuan,
+                'status_validasi' => 'approved', // Status is set to pending
             ]);
 
             // Redirect dengan pesan sukses

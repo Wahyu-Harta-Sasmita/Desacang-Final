@@ -48,80 +48,91 @@
         <div class="bg-white">
             <div class="overflow-x-auto">
                 @if ($validasi->isEmpty())
-                    <!-- Pesan Jika Tidak Ada Data -->
-                    <div class="p-6 text-center text-gray-500">
-                        <p>Tidak ada data yang tersedia.</p>
-                    </div>
+                <!-- Pesan Jika Tidak Ada Data -->
+                <div class="p-6 text-center text-gray-500">
+                    <p>Tidak ada data yang tersedia.</p>
+                </div>
                 @else
-                        <table class="w-full border-collapse border border-gray-200">
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala
-                                        Keluarga</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">No KK</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jumlah Anggota
-                                        Keluarga</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Alamat</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Gaji</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Koordinat
-                                        Geolocation</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jenis Bantuan</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Desa</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Banjar</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Foto Rumah</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Foto KK</th>
-                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($validasi as $penduduk)
-                                    <tr>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            {{ $penduduk->kepala_keluarga }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->nik }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->no_kk }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->pekerjaan }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            {{ $penduduk->jumlah_keluarga }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->alamat }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            {{ number_format($penduduk->gaji, 0, ',', '.') }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->geolocation }}
-                                        </td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            {{ $penduduk->bantuan?->jenis_bantuan ?? '-' }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->desa }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->banjar }}</td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset('assets/uploads/rumah/'. $penduduk->rumah) }}" target="_blank"
-                                                class="text-blue-600 hover:underline">Lihat File</a>
-                                        </td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            <a href="{{ asset('assets/uploads/kk/'. $penduduk->kk) }}" target="_blank"
-                                                class="text-blue-600 hover:underline">Lihat File</a>
-                                        </td>
-                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            @if ($penduduk->validasi?->status === 'validated')
-                                                <span class="text-green-600">Selesai</span>
-                                            @else
-                                                <form action="{{ route('validasicomingsoon') }}">
-                                                    <button type="submit" class="text-blue-600 hover:underline">Validasi</button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <table class="w-full border-collapse border border-gray-200">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala
+                                Keluarga</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">No KK</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jumlah Anggota
+                                Keluarga</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Alamat</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Gaji</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Koordinat
+                                Geolocation</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Jenis Bantuan</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Desa</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Banjar</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Foto Rumah</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Foto KK</th>
+                            <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($validasi as $penduduk)
+                        <tr>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                {{ $penduduk->kepala_keluarga }}
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->nik }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->no_kk }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->pekerjaan }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                {{ $penduduk->jumlah_keluarga }}
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->alamat }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                {{ number_format($penduduk->gaji, 0, ',', '.') }}
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->geolocation }}
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                {{ $penduduk->bantuan?->jenis_bantuan ?? '-' }}
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->desa }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->banjar }}</td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                <a href="{{ asset('assets/uploads/rumah/'. $penduduk->rumah) }}" target="_blank"
+                                    class="text-blue-600 hover:underline">Lihat File</a>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                <a href="{{ asset('assets/uploads/kk/'. $penduduk->kk) }}" target="_blank"
+                                    class="text-blue-600 hover:underline">Lihat File</a>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-sm text-gray-800">
+                                @if ($penduduk->validasi?->status === 'validated')
+                                <span class="text-green-600">Selesai</span>
+                                @else
+                                <form action="{{ route('validasi.validate', $penduduk->id_penduduk) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="text-blue-600 hover:underline">Validate</button>
+                                </form>
 
-                        <!-- Pagination -->
-                        <div class="mt-4 flex justify-center">
-                            {{ $validasi->links() }}
-                        </div>
-                    </div>
-                @endif
+                                <form action="{{ route('validasi.reject', $penduduk->id_penduduk) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="text-red-600 hover:underline">Reject</button>
+                                </form>
+
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="mt-4 flex justify-center">
+                    {{ $validasi->links() }}
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </x-sidebar-layout>

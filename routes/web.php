@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
     Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
     Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
+    Route::post('/validasi/{id}/validate', [OperatorController::class, 'validateData'])->name('validasi.validate');
+Route::post('/validasi/{id}/reject', [OperatorController::class, 'rejectData'])->name('validasi.reject');
     // Admin End
 });
 
