@@ -4,6 +4,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,7 +23,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::middleware('guest')->group(function () { });
+Route::middleware('guest')->group(function () {});
 
 
 Route::middleware('auth')->group(function () {
@@ -40,8 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
     Route::get('/profiles/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/profiles/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::get('/notifications/{pendudukId}', [OperatorController::class, 'getNotifications']);
-    // USER END
+
+    // NOTIFICATION
+    Route::get('/notifications/{pendudukId}', [UserController::class, 'getNotifications']);
 
     // ADMIN
     Route::get('/admin', [OperatorController::class, 'dashboard'])->name('admin');
@@ -67,8 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
     Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
     Route::post('/validasi/{id}/validate', [OperatorController::class, 'validateData'])->name('validasi.validate');
-Route::post('/validasi/{id}/reject', [OperatorController::class, 'rejectData'])->name('validasi.reject');
-    // Admin End
+    Route::post('/validasi/{id}/reject', [OperatorController::class, 'rejectData'])->name('validasi.reject');
 });
 
 

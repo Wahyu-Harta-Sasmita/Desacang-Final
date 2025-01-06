@@ -54,8 +54,9 @@
                         <table class="w-full border-collapse border border-gray-200">
                             <thead>
                                 <tr class="bg-gray-100">
+                                    <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala
-                                        Keluarga</th>
+                                    Keluarga</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">No KK</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
@@ -76,6 +77,7 @@
                             <tbody>
                                 @foreach ($validasi as $penduduk)
                                     <tr>
+                                        <td class="border border-gray-300 p-3 text-sm text-gray-800">{{ $penduduk->nama }}</td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
                                             {{ $penduduk->kepala_keluarga }}
                                         </td>
@@ -105,7 +107,7 @@
                                                 class="text-blue-600 hover:underline">Lihat File</a>
                                         </td>
                                         <td class="border border-gray-300 p-3 text-sm text-gray-800">
-                                            @if ($penduduk->validasi?->status === 'validated')
+                                            @if ($penduduk->status_validasi == 'approved')
                                                 <span class="text-green-600">Selesai</span>
                                             @else
                                                 <form action="{{ route('validasi.validate', $penduduk->id_penduduk) }}" method="POST">
