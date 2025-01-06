@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Penduduk;
 use App\Models\Bantuan;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -112,7 +113,13 @@ class OperatorController extends Controller
     $penduduk->status_validasi = 'approved';
     $penduduk->save();
 
-    // Redirect kembali ke halaman sebelumnya
+    // Simpan pesan ke tabel notifikasi
+    Notifikasi::create([
+        'penduduk_id' => $penduduk->id_penduduk, // gunakan id_penduduk sesuai migrasi
+        'pesan' => 'Validasi berhasil! Akun Anda telah terverifikasi.',
+    ]);
+
+    // Redirect kembali ke halaman sebelumnya dengan pesan sukses
     return redirect()->back()->with('success', 'Data berhasil divalidasi!');
 }
 
@@ -124,9 +131,17 @@ public function rejectData($id)
     // Hapus data penduduk yang ditolak
     $penduduk->delete();
 
-    // Redirect kembali ke halaman sebelumnya
+    // Simpan pesan ke tabel notifikasi
+    Notifikasi::create([
+        'penduduk_id' => $penduduk->id_penduduk, // gunakan id_penduduk sesuai migrasi
+        'pesan' => 'Validasi ditolak. Data Anda telah dihapus.',
+    ]);
+
+    // Redirect kembali ke halaman sebelumnya dengan pesan sukses
     return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
 }
+
+
 
 
     public function validasicomingsoon()

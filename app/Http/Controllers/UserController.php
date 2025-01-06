@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Bantuan;
+use App\Models\Notifikasi;
 use App\Models\Penduduk;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,6 +62,15 @@ class UserController extends Controller
         return Inertia::render('Profiles', [
             'penduduk' => $penduduk
         ]);
+    }
+
+    public function getNotifications($pendudukId)
+    {
+        // Ambil semua notifikasi untuk penduduk dengan ID yang diberikan
+        $notifications = Notifikasi::where('penduduk_id', $pendudukId)->get();
+
+        // Kembalikan respons dengan data notifikasi
+        return response()->json($notifications);
     }
 
     public function create()

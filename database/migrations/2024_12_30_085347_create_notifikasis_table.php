@@ -9,12 +9,15 @@ return new class extends Migration
     {
         Schema::create('notifikasis', function (Blueprint $table) {
             $table->id('id_notifikasi');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            // Ubah foreign key untuk mengacu pada 'id_penduduk', bukan 'id'
+            $table->foreignId('penduduk_id')->constrained('penduduks', 'id_penduduk')->onDelete('cascade')->onUpdate('cascade');
             $table->string('judul', 255);
             $table->text('pesan');
             $table->string('tipe', 10);
-            $table->timestamp('read_at');
+            $table->timestamp('read_at')->nullable();
+            $table->timestamps();
         });
+        
     }
 
     public function down()

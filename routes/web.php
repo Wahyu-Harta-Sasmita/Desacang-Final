@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
     Route::get('/profiles/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/profiles/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/notifications/{pendudukId}', [OperatorController::class, 'getNotifications']);
     // USER END
 
     // ADMIN
@@ -67,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
     Route::post('/validasi/{id}/validate', [OperatorController::class, 'validateData'])->name('validasi.validate');
 Route::post('/validasi/{id}/reject', [OperatorController::class, 'rejectData'])->name('validasi.reject');
+
     // Admin End
 });
 
