@@ -52,6 +52,17 @@ class OperatorController extends Controller
     {
         $query = Penduduk::query();
 
+        // Filter berdasarkan nama
+        if ($request->filled('search')) {
+            $query->where('nama', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter berdasarkan desa
+        if ($request->filled('desa_filter')) {
+            $query->where('desa', $request->desa_filter);
+        }
+
+        // Filter berdasarkan status validasi
         if ($request->filled('validated')) {
             if ($request->validated == 1) {
                 $query->where('status_validasi', 'approved');
@@ -60,7 +71,8 @@ class OperatorController extends Controller
             }
         }
 
-        $validasi = $query->paginate(10)->appends($request->all());
+        // Ambil hasil pencarian dengan pagination
+        $validasi= $query->paginate(10)->appends($request->all());
 
         return view('admin.validasidata', compact('validasi'));
     }
@@ -84,11 +96,6 @@ class OperatorController extends Controller
         $penduduk->delete();
 
         return redirect()->back()->with('success', 'Data berhasil ditolak dan dihapus!');
-    }
-
-    public function validasicomingsoon()
-    {
-        return view('admin.validasicomingsoon');
     }
 
 
@@ -122,7 +129,9 @@ class OperatorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index()
+    {
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -130,7 +139,7 @@ class OperatorController extends Controller
     public function create()
     {
         $bantuans = Bantuan::all();
-        return view('admin.formadd', compact('bantuans')); 
+        return view('admin.formadd', compact('bantuans'));
     }
 
     /**
@@ -194,7 +203,7 @@ class OperatorController extends Controller
                 'path_kk' => $pathKK,
                 'kk' => $pathKK ? basename($pathKK) : null,
                 'bantuan_id' => $bantuan->id_bantuan,
-                'status_validasi' => 'approved', 
+                'status_validasi' => 'approved',
             ]);
 
             // Redirect dengan pesan sukses

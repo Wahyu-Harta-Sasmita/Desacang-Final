@@ -133,5 +133,15 @@
             });
         }
     </script>
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
 </x-sidebar-layout>

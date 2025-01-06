@@ -14,32 +14,30 @@
                     class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
                     Data yang Belum Tervalidasi
                 </button>
+
+                <!-- Pencarian Nama -->
+                <div class="w-64">
+                    <input type="text" name="search" placeholder="Cari Nama..." value="{{ request('search') }}"
+                        class="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <!-- Filter Desa -->
+                <div>
+                    <select name="desa_filter"
+                        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
+                        <option value="">Filter Desa</option>
+                        <option value="Desa Bungkulan" {{ request('desa_filter') == 'Desa Bungkulan' ? 'selected' : '' }}>
+                            Desa
+                            Bungkulan</option>
+                        <option value="Desa Temukus" {{ request('desa_filter') == 'Desa Temukus' ? 'selected' : '' }}>Desa
+                            Temukus
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Tombol Cari -->
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cari</button>
             </form>
-
-            <!-- Pencarian Nama -->
-            <div class="w-64">
-                <input type="text" name="search" placeholder="Cari Nama..." value="{{ request('search') }}"
-                    class="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <!-- Filter Desa -->
-            <div>
-                <select name="desa_filter"
-                    class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
-                    <option value="">Filter Desa</option>
-                    <option value="Desa Bungkulan" {{ request('desa_filter') == 'Desa Bungkulan' ? 'selected' : '' }}>
-                        Desa
-                        Bungkulan</option>
-                    <option value="Desa Temukus" {{ request('desa_filter') == 'Desa Temukus' ? 'selected' : '' }}>Desa
-                        Temukus
-                    </option>
-                </select>
-            </div>
-
-            <!-- Tombol Cari -->
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cari</button>
-            </form>
-
         </div>
 
         <!-- Tabel Data Penduduk -->
@@ -56,7 +54,7 @@
                                 <tr class="bg-gray-100">
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Nama Kepala
-                                    Keluarga</th>
+                                        Keluarga</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">NIK</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">No KK</th>
                                     <th class="border border-gray-300 p-3 text-sm font-medium text-gray-700">Pekerjaan</th>
