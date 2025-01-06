@@ -35,15 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'index'])->name('index');
     Route::get('/article', [UserController::class, 'article']);
     Route::get('/article/{id}', [UserController::class, 'articleDetail']);
-    Route::get('/notifikasi/{id_penduduk}', [UserController::class, 'notifikasi']);
+    Route::get('/notifikasi', [UserController::class, 'notifikasi']);
+    Route::get('/notifikasi/{id_penduduk}', [UserController::class, 'notifikasiid']);
     Route::get('/profiles', [UserController::class, 'profiles'])->name('profiles');
     Route::get('/user/formadd', [UserController::class, 'create'])->name('useradd.create');
     Route::post('/user/formadd', [UserController::class, 'store'])->name('useradd.store');
     Route::get('/profiles/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/profiles/{id}', [UserController::class, 'update'])->name('user.update');
-
-    // NOTIFICATION
-    Route::get('/notifications/{pendudukId}', [UserController::class, 'getNotifications']);
 
     // ADMIN
     Route::get('/admin', [OperatorController::class, 'dashboard'])->name('admin');

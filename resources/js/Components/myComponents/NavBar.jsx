@@ -29,7 +29,7 @@ const NavBar = () => {
               Tambah Data
             </a>
 
-          <Link href="/notifikasi" className="relative">
+          <a href="/notifikasi/4" className="relative">
             <img
               src="/assets/icon/notification.png"
               alt="notification"
@@ -38,7 +38,7 @@ const NavBar = () => {
             <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
               3
             </span>
-          </Link>
+          </a>
 
           <Link href="/profiles">
             <img

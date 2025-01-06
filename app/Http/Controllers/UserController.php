@@ -58,9 +58,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function notifikasi($id_penduduk)
+
+    public function notifikasi()
     {
-        // Ambil notifikasi yang sesuai dengan id_penduduk
+        $notifications = Penduduk::all();
+
+        return Inertia::render('Notification', [
+            'notifications' => $notifications,
+        ]);
+    }
+
+    public function notifikasiid($id_penduduk)
+    {
         $notifications = Penduduk::where('id_penduduk', $id_penduduk)->get();
 
         return Inertia::render('Notification', [
@@ -197,10 +206,8 @@ class UserController extends Controller
                 'jenis_bantuan' => 'required|string|max:50',
             ]);
 
-            // Temukan data penduduk berdasarkan ID
             $penduduk = Penduduk::findOrFail($id);
 
-            // Tangani file jika diunggah, jika tidak, pertahankan nilai lama
             if ($request->file('rumah')) {
                 $pathRumah = $request->file('rumah')->store('assets/uploads/rumah', 'public');
                 $validated['path_rumah'] = $pathRumah;
