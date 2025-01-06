@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 function Notification() {
   const { notifications } = usePage().props;
@@ -9,7 +9,7 @@ function Notification() {
         <div>No notifications available.</div>
       ) : (
         notifications.map((notification) => (
-          <div key={notification.id}>
+          <Link href={`/notifikasi/${notification.id_penduduk}`} key={notification.id}>
             <div className="border-b-2 border-grey-800 p-6 rounded-md w-full h-[100px]">
               <div className="flex justify-between w-full items-center">
                 <h3 className="font-bold text-lg">{notification.judul}</h3>
@@ -22,7 +22,7 @@ function Notification() {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         ))
       )}
     </div>
